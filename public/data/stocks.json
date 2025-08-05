@@ -1,0 +1,1057 @@
+{
+  "stockGroups": {
+    "technology_software": {
+      "groupName": "Technology & Software",
+      "description": "Major tech giants, software companies, and semiconductor manufacturers",
+      "companies": [
+        {
+          "symbol": "aapl",
+          "companyName": "Apple Inc",
+          "symbolID": 81
+        },
+        {
+          "symbol": "msft",
+          "companyName": "Microsoft Corporation",
+          "symbolID": 248
+        },
+        {
+          "symbol": "googl",
+          "companyName": "Alphabet Inc",
+          "symbolID": 377
+        },
+        {
+          "symbol": "goog",
+          "companyName": "Alphabet Inc",
+          "symbolID": 523
+        },
+        {
+          "symbol": "fb",
+          "companyName": "Facebook Inc",
+          "symbolID": 129
+        },
+        {
+          "symbol": "nvda",
+          "companyName": "NVIDIA Corporation",
+          "symbolID": 99
+        },
+        {
+          "symbol": "intc",
+          "companyName": "Intel Corporation",
+          "symbolID": 416
+        },
+        {
+          "symbol": "amd",
+          "companyName": "Advanced Micro Devices Inc",
+          "symbolID": 387
+        },
+        {
+          "symbol": "orcl",
+          "companyName": "Oracle Corporation",
+          "symbolID": 346
+        },
+        {
+          "symbol": "adbe",
+          "companyName": "Adobe Systems Incorporated",
+          "symbolID": 365
+        },
+        {
+          "symbol": "crm",
+          "companyName": "Salesforce com Inc",
+          "symbolID": 498
+        },
+        {
+          "symbol": "ibm",
+          "companyName": "International Business Machines Corporation",
+          "symbolID": 127
+        },
+        {
+          "symbol": "csco",
+          "companyName": "Cisco Systems Inc",
+          "symbolID": 189
+        },
+        {
+          "symbol": "qcom",
+          "companyName": "QUALCOMM Incorporated",
+          "symbolID": 563
+        },
+        {
+          "symbol": "txn",
+          "companyName": "Texas Instruments Incorporated",
+          "symbolID": 303
+        },
+        {
+          "symbol": "adi",
+          "companyName": "Analog Devices Inc",
+          "symbolID": 148
+        },
+        {
+          "symbol": "mxim",
+          "companyName": "Maxim Integrated Products Inc",
+          "symbolID": 597
+        },
+        {
+          "symbol": "xlnx",
+          "companyName": "Xilinx Inc",
+          "symbolID": 262
+        },
+        {
+          "symbol": "mchp",
+          "companyName": "Microchip Technology Incorporated",
+          "symbolID": 558
+        },
+        {
+          "symbol": "swks",
+          "companyName": "Skyworks Solutions Inc",
+          "symbolID": 587
+        },
+        {
+          "symbol": "qrvo",
+          "companyName": "Qorvo Inc",
+          "symbolID": 591
+        },
+        {
+          "symbol": "klac",
+          "companyName": "KLA Tencor Corporation",
+          "symbolID": 188
+        },
+        {
+          "symbol": "lrcx",
+          "companyName": "Lam Research Corporation",
+          "symbolID": 38
+        },
+        {
+          "symbol": "amat",
+          "companyName": "Applied Materials Inc",
+          "symbolID": 9
+        },
+        {
+          "symbol": "ter",
+          "companyName": "Teradyne Inc",
+          "symbolID": 134
+        },
+        {
+          "symbol": "mu",
+          "companyName": "Micron Technology Inc",
+          "symbolID": 519
+        },
+        {
+          "symbol": "wdc",
+          "companyName": "Western Digital Corporation",
+          "symbolID": 11
+        },
+        {
+          "symbol": "stx",
+          "companyName": "Seagate Technology PLC",
+          "symbolID": 608
+        },
+        {
+          "symbol": "akam",
+          "companyName": "Akamai Technologies Inc",
+          "symbolID": 128
+        },
+        {
+          "symbol": "vrsn",
+          "companyName": "VeriSign Inc",
+          "symbolID": 43
+        },
+        {
+          "symbol": "adsk",
+          "companyName": "Autodesk Inc",
+          "symbolID": 5
+        }
+      ]
+    },
+    "healthcare_pharmaceuticals": {
+      "groupName": "Healthcare & Pharmaceuticals",
+      "description": "Pharmaceutical companies, medical devices, and healthcare services",
+      "companies": [
+        {
+          "symbol": "jnj",
+          "companyName": "Johnson Johnson",
+          "symbolID": 339
+        },
+        {
+          "symbol": "pfe",
+          "companyName": "Pfizer Inc",
+          "symbolID": 566
+        },
+        {
+          "symbol": "mrk",
+          "companyName": "Merck Company Inc",
+          "symbolID": 382
+        },
+        {
+          "symbol": "abbv",
+          "companyName": "AbbVie Inc",
+          "symbolID": 150
+        },
+        {
+          "symbol": "lly",
+          "companyName": "Eli Lilly and Company",
+          "symbolID": 35
+        },
+        {
+          "symbol": "amgn",
+          "companyName": "Amgen Inc",
+          "symbolID": 139
+        },
+        {
+          "symbol": "gild",
+          "companyName": "Gilead Sciences Inc",
+          "symbolID": 461
+        },
+        {
+          "symbol": "biib",
+          "companyName": "Biogen Inc",
+          "symbolID": 306
+        },
+        {
+          "symbol": "regn",
+          "companyName": "Regeneron Pharmaceuticals Inc",
+          "symbolID": 195
+        },
+        {
+          "symbol": "vrtx",
+          "companyName": "Vertex Pharmaceuticals Incorporated",
+          "symbolID": 137
+        },
+        {
+          "symbol": "celg",
+          "companyName": "Celgene Corporation",
+          "symbolID": 556
+        },
+        {
+          "symbol": "bmy",
+          "companyName": "Bristol Myers Squibb Company",
+          "symbolID": 186
+        },
+        {
+          "symbol": "alxn",
+          "companyName": "Alexion Pharmaceuticals Inc",
+          "symbolID": 321
+        },
+        {
+          "symbol": "mdt",
+          "companyName": "Medtronic plc",
+          "symbolID": 308
+        },
+        {
+          "symbol": "abt",
+          "companyName": "Abbott Laboratories",
+          "symbolID": 502
+        },
+        {
+          "symbol": "syk",
+          "companyName": "Stryker Corporation",
+          "symbolID": 571
+        },
+        {
+          "symbol": "bsx",
+          "companyName": "Boston Scientific Corporation",
+          "symbolID": 144
+        },
+        {
+          "symbol": "bdx",
+          "companyName": "Becton Dickinson and Company",
+          "symbolID": 26
+        },
+        {
+          "symbol": "bax",
+          "companyName": "Baxter International Inc",
+          "symbolID": 135
+        },
+        {
+          "symbol": "ew",
+          "companyName": "Edwards Lifesciences Corporation",
+          "symbolID": 496
+        },
+        {
+          "symbol": "zbh",
+          "companyName": "Zimmer Biomet Holdings Inc",
+          "symbolID": 310
+        },
+        {
+          "symbol": "var",
+          "companyName": "Varian Medical Systems Inc",
+          "symbolID": 131
+        },
+        {
+          "symbol": "a",
+          "companyName": "Agilent Technologies Inc",
+          "symbolID": 138
+        },
+        {
+          "symbol": "ilmn",
+          "companyName": "Illumina Inc",
+          "symbolID": 462
+        },
+        {
+          "symbol": "tmo",
+          "companyName": "Thermo Fisher Scientific Inc",
+          "symbolID": 532
+        },
+        {
+          "symbol": "dhr",
+          "companyName": "Danaher Corporation",
+          "symbolID": 295
+        },
+        {
+          "symbol": "zts",
+          "companyName": "Zoetis Inc",
+          "symbolID": 245
+        },
+        {
+          "symbol": "cern",
+          "companyName": "Cerner Corporation",
+          "symbolID": 122
+        }
+      ]
+    },
+    "financial_services": {
+      "groupName": "Financial Services & Banking",
+      "description": "Banks, investment firms, insurance companies, and financial services",
+      "companies": [
+        {
+          "symbol": "jpm",
+          "companyName": "J P Morgan Chase Co",
+          "symbolID": 7
+        },
+        {
+          "symbol": "bac",
+          "companyName": "Bank of America Corporation",
+          "symbolID": 494
+        },
+        {
+          "symbol": "wfc",
+          "companyName": "Wells Fargo Company",
+          "symbolID": 482
+        },
+        {
+          "symbol": "c",
+          "companyName": "Citigroup Inc",
+          "symbolID": 479
+        },
+        {
+          "symbol": "usb",
+          "companyName": "U S Bancorp",
+          "symbolID": 455
+        },
+        {
+          "symbol": "pnc",
+          "companyName": "PNC Financial Services Group Inc The",
+          "symbolID": 94
+        },
+        {
+          "symbol": "bk",
+          "companyName": "Bank Of New York Mellon Corporation The",
+          "symbolID": 161
+        },
+        {
+          "symbol": "mtb",
+          "companyName": "M T Bank Corporation",
+          "symbolID": 56
+        },
+        {
+          "symbol": "gs",
+          "companyName": "Goldman Sachs Group Inc The",
+          "symbolID": 301
+        },
+        {
+          "symbol": "ms",
+          "companyName": "Morgan Stanley",
+          "symbolID": 497
+        },
+        {
+          "symbol": "axp",
+          "companyName": "American Express Company",
+          "symbolID": 350
+        },
+        {
+          "symbol": "blk",
+          "companyName": "BlackRock Inc",
+          "symbolID": 77
+        },
+        {
+          "symbol": "schw",
+          "companyName": "The Charles Schwab Corporation",
+          "symbolID": 260
+        },
+        {
+          "symbol": "amp",
+          "companyName": "AMERIPRISE FINANCIAL SERVICES INC",
+          "symbolID": 14
+        },
+        {
+          "symbol": "trow",
+          "companyName": "T Rowe Price Group Inc",
+          "symbolID": 284
+        },
+        {
+          "symbol": "ben",
+          "companyName": "Franklin Resources Inc",
+          "symbolID": 223
+        },
+        {
+          "symbol": "aig",
+          "companyName": "American International Group Inc",
+          "symbolID": 509
+        },
+        {
+          "symbol": "trv",
+          "companyName": "The Travelers Companies Inc",
+          "symbolID": 36
+        },
+        {
+          "symbol": "all",
+          "companyName": "Allstate Corporation The",
+          "symbolID": 152
+        },
+        {
+          "symbol": "pgr",
+          "companyName": "Progressive Corporation The",
+          "symbolID": 440
+        },
+        {
+          "symbol": "afl",
+          "companyName": "Aflac Incorporated",
+          "symbolID": 467
+        },
+        {
+          "symbol": "pru",
+          "companyName": "Prudential Financial Inc",
+          "symbolID": 199
+        },
+        {
+          "symbol": "met",
+          "companyName": "MetLife Inc",
+          "symbolID": 341
+        },
+        {
+          "symbol": "lnc",
+          "companyName": "Lincoln National Corporation",
+          "symbolID": 589
+        },
+        {
+          "symbol": "cb",
+          "companyName": "Chubb Limited",
+          "symbolID": 441
+        },
+        {
+          "symbol": "aon",
+          "companyName": "Aon plc",
+          "symbolID": 207
+        },
+        {
+          "symbol": "mmc",
+          "companyName": "Marsh McLennan Companies Inc",
+          "symbolID": 287
+        },
+        {
+          "symbol": "cof",
+          "companyName": "Capital One Financial Corporation",
+          "symbolID": 126
+        },
+        {
+          "symbol": "dfs",
+          "companyName": "Discover Financial Services",
+          "symbolID": 592
+        },
+        {
+          "symbol": "syf",
+          "companyName": "Synchrony Financial",
+          "symbolID": 124
+        }
+      ]
+    },
+    "energy_oil": {
+      "groupName": "Energy & Oil",
+      "description": "Oil & gas companies, energy services, and utilities",
+      "companies": [
+        {
+          "symbol": "xom",
+          "companyName": "Exxon Mobil Corporation",
+          "symbolID": 364
+        },
+        {
+          "symbol": "cvx",
+          "companyName": "Chevron Corporation",
+          "symbolID": 323
+        },
+        {
+          "symbol": "cop",
+          "companyName": "ConocoPhillips",
+          "symbolID": 1
+        },
+        {
+          "symbol": "eog",
+          "companyName": "EOG Resources Inc",
+          "symbolID": 470
+        },
+        {
+          "symbol": "pxd",
+          "companyName": "Pioneer Natural Resources Company",
+          "symbolID": 20
+        },
+        {
+          "symbol": "oxy",
+          "companyName": "Occidental Petroleum Corporation",
+          "symbolID": 465
+        },
+        {
+          "symbol": "apc",
+          "companyName": "Anadarko Petroleum Corporation",
+          "symbolID": 305
+        },
+        {
+          "symbol": "dvn",
+          "companyName": "Devon Energy Corporation",
+          "symbolID": 543
+        },
+        {
+          "symbol": "apa",
+          "companyName": "Apache Corporation",
+          "symbolID": 577
+        },
+        {
+          "symbol": "mro",
+          "companyName": "Marathon Oil Corporation",
+          "symbolID": 298
+        },
+        {
+          "symbol": "hes",
+          "companyName": "Hess Corporation",
+          "symbolID": 216
+        },
+        {
+          "symbol": "mur",
+          "companyName": "Murphy Oil Corporation",
+          "symbolID": 168
+        },
+        {
+          "symbol": "slb",
+          "companyName": "Schlumberger N V",
+          "symbolID": 459
+        },
+        {
+          "symbol": "hal",
+          "companyName": "Halliburton Company",
+          "symbolID": 396
+        },
+        {
+          "symbol": "nov",
+          "companyName": "National Oilwell Varco Inc",
+          "symbolID": 584
+        },
+        {
+          "symbol": "rig",
+          "companyName": "Transocean Ltd",
+          "symbolID": 397
+        },
+        {
+          "symbol": "esv",
+          "companyName": "ENSCO plc",
+          "symbolID": 422
+        },
+        {
+          "symbol": "wft",
+          "companyName": "Weatherford International plc",
+          "symbolID": 169
+        },
+        {
+          "symbol": "nee",
+          "companyName": "NextEra Energy Inc",
+          "symbolID": 119
+        },
+        {
+          "symbol": "duk",
+          "companyName": "Duke Energy Corporation",
+          "symbolID": 116
+        },
+        {
+          "symbol": "so",
+          "companyName": "Southern Company The",
+          "symbolID": 236
+        },
+        {
+          "symbol": "exc",
+          "companyName": "Exelon Corporation",
+          "symbolID": 486
+        },
+        {
+          "symbol": "aep",
+          "companyName": "American Electric Power Company Inc",
+          "symbolID": 393
+        },
+        {
+          "symbol": "xel",
+          "companyName": "Xcel Energy Inc",
+          "symbolID": 39
+        },
+        {
+          "symbol": "ed",
+          "companyName": "Consolidated Edison Inc",
+          "symbolID": 85
+        },
+        {
+          "symbol": "peg",
+          "companyName": "Public Service Enterprise Group Incorporated",
+          "symbolID": 257
+        },
+        {
+          "symbol": "d",
+          "companyName": "Dominion Energy Inc",
+          "symbolID": 218
+        },
+        {
+          "symbol": "mpc",
+          "companyName": "Marathon Petroleum Corporation",
+          "symbolID": 583
+        },
+        {
+          "symbol": "vlo",
+          "companyName": "Valero Energy Corporation",
+          "symbolID": 609
+        },
+        {
+          "symbol": "psx",
+          "companyName": "Phillips",
+          "symbolID": 359
+        }
+      ]
+    },
+    "consumer_retail": {
+      "groupName": "Consumer & Retail",
+      "description": "Retail companies, consumer goods, food & beverage, and apparel",
+      "companies": [
+        {
+          "symbol": "amzn",
+          "companyName": "Amazon com Inc",
+          "symbolID": 206
+        },
+        {
+          "symbol": "wmt",
+          "companyName": "Walmart Inc",
+          "symbolID": 249
+        },
+        {
+          "symbol": "hd",
+          "companyName": "Home Depot Inc The",
+          "symbolID": 514
+        },
+        {
+          "symbol": "low",
+          "companyName": "Lowe s Companies Inc",
+          "symbolID": 320
+        },
+        {
+          "symbol": "tgt",
+          "companyName": "Target Corporation",
+          "symbolID": 146
+        },
+        {
+          "symbol": "cost",
+          "companyName": "Costco Wholesale Corporation",
+          "symbolID": 565
+        },
+        {
+          "symbol": "tjx",
+          "companyName": "TJX Companies Inc The",
+          "symbolID": 209
+        },
+        {
+          "symbol": "ko",
+          "companyName": "Coca Cola Company The",
+          "symbolID": 192
+        },
+        {
+          "symbol": "pep",
+          "companyName": "Pepsico Inc",
+          "symbolID": 464
+        },
+        {
+          "symbol": "mcd",
+          "companyName": "McDonald s Corporation",
+          "symbolID": 103
+        },
+        {
+          "symbol": "sbux",
+          "companyName": "Starbucks Corporation",
+          "symbolID": 71
+        },
+        {
+          "symbol": "yum",
+          "companyName": "Yum Brands Inc",
+          "symbolID": 88
+        },
+        {
+          "symbol": "k",
+          "companyName": "Kellogg Company",
+          "symbolID": 34
+        },
+        {
+          "symbol": "gis",
+          "companyName": "General Mills Inc",
+          "symbolID": 487
+        },
+        {
+          "symbol": "cpb",
+          "companyName": "Campbell Soup Company",
+          "symbolID": 520
+        },
+        {
+          "symbol": "sjm",
+          "companyName": "J M Smucker Company The",
+          "symbolID": 392
+        },
+        {
+          "symbol": "hrl",
+          "companyName": "Hormel Foods Corporation",
+          "symbolID": 423
+        },
+        {
+          "symbol": "nke",
+          "companyName": "Nike Inc",
+          "symbolID": 120
+        },
+        {
+          "symbol": "vfc",
+          "companyName": "V F Corporation",
+          "symbolID": 222
+        },
+        {
+          "symbol": "pvh",
+          "companyName": "PVH Corp",
+          "symbolID": 82
+        },
+        {
+          "symbol": "rl",
+          "companyName": "Ralph Lauren Corporation",
+          "symbolID": 546
+        },
+        {
+          "symbol": "ua",
+          "companyName": "Under Armour Inc",
+          "symbolID": 31
+        },
+        {
+          "symbol": "pg",
+          "companyName": "Procter Gamble Company The",
+          "symbolID": 172
+        },
+        {
+          "symbol": "cl",
+          "companyName": "Colgate Palmolive Company",
+          "symbolID": 72
+        },
+        {
+          "symbol": "kmb",
+          "companyName": "Kimberly Clark Corporation",
+          "symbolID": 595
+        },
+        {
+          "symbol": "clx",
+          "companyName": "Clorox Company The",
+          "symbolID": 74
+        },
+        {
+          "symbol": "chd",
+          "companyName": "Church Dwight Company Inc",
+          "symbolID": 369
+        },
+        {
+          "symbol": "kr",
+          "companyName": "Kroger Company The",
+          "symbolID": 544
+        },
+        {
+          "symbol": "wba",
+          "companyName": "Walgreens Boots Alliance Inc",
+          "symbolID": 212
+        },
+        {
+          "symbol": "cvs",
+          "companyName": "CVS Health Corporation",
+          "symbolID": 388
+        }
+      ]
+    },
+    "industrial_manufacturing": {
+      "groupName": "Industrial & Manufacturing",
+      "description": "Aerospace, defense, heavy machinery, and industrial equipment",
+      "companies": [
+        {
+          "symbol": "ba",
+          "companyName": "Boeing Company The",
+          "symbolID": 140
+        },
+        {
+          "symbol": "lmt",
+          "companyName": "Lockheed Martin Corporation",
+          "symbolID": 208
+        },
+        {
+          "symbol": "noc",
+          "companyName": "Northrop Grumman Corporation",
+          "symbolID": 47
+        },
+        {
+          "symbol": "rtn",
+          "companyName": "Raytheon Company",
+          "symbolID": 133
+        },
+        {
+          "symbol": "gd",
+          "companyName": "General Dynamics Corporation",
+          "symbolID": 526
+        },
+        {
+          "symbol": "txt",
+          "companyName": "Textron Inc",
+          "symbolID": 402
+        },
+        {
+          "symbol": "col",
+          "companyName": "Rockwell Collins Inc",
+          "symbolID": 27
+        },
+        {
+          "symbol": "cat",
+          "companyName": "Caterpillar Inc",
+          "symbolID": 19
+        },
+        {
+          "symbol": "de",
+          "companyName": "Deere Company",
+          "symbolID": 49
+        },
+        {
+          "symbol": "cmi",
+          "companyName": "Cummins Inc",
+          "symbolID": 224
+        },
+        {
+          "symbol": "etn",
+          "companyName": "Eaton Corporation PLC",
+          "symbolID": 22
+        },
+        {
+          "symbol": "emr",
+          "companyName": "Emerson Electric Company",
+          "symbolID": 330
+        },
+        {
+          "symbol": "hon",
+          "companyName": "Honeywell International Inc",
+          "symbolID": 489
+        },
+        {
+          "symbol": "ge",
+          "companyName": "General Electric Company",
+          "symbolID": 594
+        },
+        {
+          "symbol": "itw",
+          "companyName": "Illinois Tool Works Inc",
+          "symbolID": 89
+        },
+        {
+          "symbol": "rok",
+          "companyName": "Rockwell Automation Inc",
+          "symbolID": 450
+        },
+        {
+          "symbol": "ph",
+          "companyName": "Parker Hannifin Corporation",
+          "symbolID": 114
+        },
+        {
+          "symbol": "dov",
+          "companyName": "Dover Corporation",
+          "symbolID": 93
+        },
+        {
+          "symbol": "ir",
+          "companyName": "Ingersoll Rand plc Ireland",
+          "symbolID": 16
+        },
+        {
+          "symbol": "pcar",
+          "companyName": "PACCAR Inc",
+          "symbolID": 123
+        },
+        {
+          "symbol": "utx",
+          "companyName": "United Technologies Corporation",
+          "symbolID": 274
+        },
+        {
+          "symbol": "mmm",
+          "companyName": "M Company",
+          "symbolID": 157
+        },
+        {
+          "symbol": "jci",
+          "companyName": "Johnson Controls International plc",
+          "symbolID": 407
+        }
+      ]
+    },
+    "transportation_logistics": {
+      "groupName": "Transportation & Logistics",
+      "description": "Airlines, shipping, railroads, and logistics companies",
+      "companies": [
+        {
+          "symbol": "dal",
+          "companyName": "Delta Air Lines Inc",
+          "symbolID": 521
+        },
+        {
+          "symbol": "ual",
+          "companyName": "United Continental Holdings Inc",
+          "symbolID": 430
+        },
+        {
+          "symbol": "aal",
+          "companyName": "American Airlines Group Inc",
+          "symbolID": 52
+        },
+        {
+          "symbol": "luv",
+          "companyName": "Southwest Airlines Company",
+          "symbolID": 156
+        },
+        {
+          "symbol": "ups",
+          "companyName": "United Parcel Service Inc",
+          "symbolID": 403
+        },
+        {
+          "symbol": "fdx",
+          "companyName": "FedEx Corporation",
+          "symbolID": 561
+        },
+        {
+          "symbol": "chrw",
+          "companyName": "C H Robinson Worldwide Inc",
+          "symbolID": 307
+        },
+        {
+          "symbol": "expd",
+          "companyName": "Expeditors International of Washington Inc",
+          "symbolID": 427
+        },
+        {
+          "symbol": "unp",
+          "companyName": "Union Pacific Corporation",
+          "symbolID": 231
+        },
+        {
+          "symbol": "csx",
+          "companyName": "CSX Corporation",
+          "symbolID": 329
+        },
+        {
+          "symbol": "nsc",
+          "companyName": "Norfolk Souther Corporation",
+          "symbolID": 349
+        },
+        {
+          "symbol": "ksu",
+          "companyName": "Kansas City Southern",
+          "symbolID": 318
+        },
+        {
+          "symbol": "car",
+          "companyName": "Avis Budget Group Inc",
+          "symbolID": 404
+        },
+        {
+          "symbol": "jbht",
+          "companyName": "J B Hunt Transport Services Inc",
+          "symbolID": 325
+        },
+        {
+          "symbol": "r",
+          "companyName": "Ryder System Inc",
+          "symbolID": 449
+        }
+      ]
+    },
+    "media_entertainment": {
+      "groupName": "Media & Entertainment",
+      "description": "Traditional media, streaming, gaming, and entertainment companies",
+      "companies": [
+        {
+          "symbol": "dis",
+          "companyName": "Walt Disney Company The",
+          "symbolID": 227
+        },
+        {
+          "symbol": "cmcsa",
+          "companyName": "Comcast Corporation",
+          "symbolID": 545
+        },
+        {
+          "symbol": "cbs",
+          "companyName": "CBS Corporation",
+          "symbolID": 100
+        },
+        {
+          "symbol": "viab",
+          "companyName": "Viacom Inc",
+          "symbolID": 50
+        },
+        {
+          "symbol": "fox",
+          "companyName": "Twenty First Century Fox Inc",
+          "symbolID": 313
+        },
+        {
+          "symbol": "foxa",
+          "companyName": "Twenty First Century Fox Inc",
+          "symbolID": 493
+        },
+        {
+          "symbol": "nflx",
+          "companyName": "Netflix Inc",
+          "symbolID": 570
+        },
+        {
+          "symbol": "atvi",
+          "companyName": "Activision Blizzard Inc",
+          "symbolID": 214
+        },
+        {
+          "symbol": "ea",
+          "companyName": "Electronic Arts Inc",
+          "symbolID": 111
+        },
+        {
+          "symbol": "nwsa",
+          "companyName": "News Corporation",
+          "symbolID": 505
+        },
+        {
+          "symbol": "disca",
+          "companyName": "Discovery Inc",
+          "symbolID": 457
+        },
+        {
+          "symbol": "t",
+          "companyName": "AT T Inc",
+          "symbolID": 62
+        },
+        {
+          "symbol": "vz",
+          "companyName": "Verizon Communications Inc",
+          "symbolID": 332
+        },
+        {
+          "symbol": "tmus",
+          "companyName": "T Mobile US Inc",
+          "symbolID": 572
+        }
+      ]
+    }
+  }
+}
