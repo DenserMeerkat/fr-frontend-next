@@ -1,3 +1,4 @@
+import { RefetchIntervals } from "@/types";
 import {
   AppWindowIcon,
   BookOpenIcon,
@@ -62,8 +63,10 @@ export const navItems = [
   },
   {
     title: "Settings",
-    url: "/settings",
+    url: "?modal=settings",
     icon: Settings2,
     items: [],
   },
 ];
+
+export const DEFAULT_REFETCH_INTERVAL = RefetchIntervals.FIVE_MINUTES;

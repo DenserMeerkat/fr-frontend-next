@@ -12,6 +12,7 @@ import { queryKeys } from "@/lib/query-keys";
 import { stocksService } from "@/lib/api/services/stocks.service";
 import { Skeleton } from "../ui/skeleton";
 import { Area, AreaChart, YAxis } from "recharts";
+import { useStateStore } from "@/hooks/use-state-store";
 
 const chartConfig = {
   price: {
@@ -26,6 +27,7 @@ export default function TrendCard({
   symbol: string;
   howManyValues?: number;
 }) {
+  const { refetchInterval, setRefetchInterval } = useStateStore();
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.stocks.symbols.detail(symbol),
     queryFn: () =>
@@ -33,7 +35,7 @@ export default function TrendCard({
         symbol: symbol,
         howManyValues: howManyValues,
       }),
-    refetchInterval: 1000,
+    refetchInterval: refetchInterval.value,
   });
 
   if (isLoading) {

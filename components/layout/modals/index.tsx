@@ -1,0 +1,32 @@
+import { useSearchParams, useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import SettingsModal from "./settings";
+
+const Modals = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const modal = searchParams.get("modal");
+
+  const VALID_MODALS = ["settings"];
+
+  const removeModalParam = () => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.delete("modal");
+    router.replace(`?${newSearchParams.toString()}`);
+  };
+
+  useEffect(() => {
+    if (modal && !VALID_MODALS.includes(modal)) {
+      removeModalParam();
+    }
+  }, [modal, removeModalParam, VALID_MODALS]);
+
+  switch (modal) {
+    case "settings":
+      return <SettingsModal onClose={removeModalParam} />;
+    default:
+      return null;
+  }
+};
+
+export default Modals;

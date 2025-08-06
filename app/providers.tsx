@@ -13,7 +13,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
       <ThemeProvider attribute="class" defaultTheme="dark">
         <TooltipProvider delayDuration={100}>
           {children}
-          <Toaster position="bottom-left" richColors closeButton />
+          <Toaster position="bottom-right" closeButton />
         </TooltipProvider>
       </ThemeProvider>
     </QueryClientProvider>
