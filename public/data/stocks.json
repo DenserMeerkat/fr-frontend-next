@@ -1,6 +1,6 @@
 {
-  "stockGroups": {
-    "technology_software": {
+  "stockGroups": [
+    {
       "groupName": "Technology & Software",
       "description": "Major tech giants, software companies, and semiconductor manufacturers",
       "companies": [
@@ -161,7 +161,7 @@
         }
       ]
     },
-    "healthcare_pharmaceuticals": {
+    {
       "groupName": "Healthcare & Pharmaceuticals",
       "description": "Pharmaceutical companies, medical devices, and healthcare services",
       "companies": [
@@ -307,7 +307,7 @@
         }
       ]
     },
-    "financial_services": {
+    {
       "groupName": "Financial Services & Banking",
       "description": "Banks, investment firms, insurance companies, and financial services",
       "companies": [
@@ -463,7 +463,7 @@
         }
       ]
     },
-    "energy_oil": {
+    {
       "groupName": "Energy & Oil",
       "description": "Oil & gas companies, energy services, and utilities",
       "companies": [
@@ -619,7 +619,7 @@
         }
       ]
     },
-    "consumer_retail": {
+    {
       "groupName": "Consumer & Retail",
       "description": "Retail companies, consumer goods, food & beverage, and apparel",
       "companies": [
@@ -775,7 +775,7 @@
         }
       ]
     },
-    "industrial_manufacturing": {
+    {
       "groupName": "Industrial & Manufacturing",
       "description": "Aerospace, defense, heavy machinery, and industrial equipment",
       "companies": [
@@ -896,7 +896,7 @@
         }
       ]
     },
-    "transportation_logistics": {
+    {
       "groupName": "Transportation & Logistics",
       "description": "Airlines, shipping, railroads, and logistics companies",
       "companies": [
@@ -977,7 +977,7 @@
         }
       ]
     },
-    "media_entertainment": {
+    {
       "groupName": "Media & Entertainment",
       "description": "Traditional media, streaming, gaming, and entertainment companies",
       "companies": [
@@ -1053,5 +1053,5 @@
         }
       ]
     }
-  }
+  ]
 }

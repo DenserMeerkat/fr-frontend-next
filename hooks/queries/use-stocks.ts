@@ -34,7 +34,8 @@ export const useLatestStockPrice = (symbol: string, enabled = true) => {
 export const useRecentStockPrices = (
   symbol: string,
   count: number = 10,
-  enabled = true
+  enabled = true,
+  refetchInterval?: number
 ) => {
   return useQuery({
     queryKey: queryKeys.stocks.prices.recentBySymbol(symbol, count),
@@ -45,6 +46,7 @@ export const useRecentStockPrices = (
       }),
     enabled: enabled && !!symbol && count > 0,
     staleTime: 30 * 1000,
+    refetchInterval: refetchInterval,
   });
 };
 

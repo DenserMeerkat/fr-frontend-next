@@ -6,10 +6,10 @@ export interface ApiResponse<T> {
 
 export const RefetchIntervals = {
   ONE_SECOND: { label: "1 second", value: 1000 },
-  FIVE_SECONDS: { label: "5 seconds", value: 5000 },
-  TEN_SECONDS: { label: "10 seconds", value: 10000 },
-  ONE_MINUTE: { label: "1 minute", value: 60000 },
-  FIVE_MINUTES: { label: "5 minutes", value: 300000 },
+  FIVE_SECONDS: { label: "5 seconds", value: 5 * 1000 },
+  TEN_SECONDS: { label: "10 seconds", value: 10 * 1000 },
+  ONE_MINUTE: { label: "1 minute", value: 60 * 1000 },
+  FIVE_MINUTES: { label: "5 minutes", value: 300 * 1000 },
 } as const;
 
 export type RefetchInterval =

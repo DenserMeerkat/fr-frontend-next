@@ -7,12 +7,10 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/query-keys";
-import { stocksService } from "@/lib/api/services/stocks.service";
 import { Skeleton } from "../ui/skeleton";
 import { Area, AreaChart, YAxis } from "recharts";
 import { useStateStore } from "@/hooks/use-state-store";
+import { useRecentStockPrices } from "@/hooks/queries";
 
 const chartConfig = {
   price: {
@@ -27,16 +25,13 @@ export default function TrendCard({
   symbol: string;
   howManyValues?: number;
 }) {
-  const { refetchInterval, setRefetchInterval } = useStateStore();
-  const { data, isLoading, error } = useQuery({
-    queryKey: queryKeys.stocks.symbols.detail(symbol),
-    queryFn: () =>
-      stocksService.getNRecentStockPrices({
-        symbol: symbol,
-        howManyValues: howManyValues,
-      }),
-    refetchInterval: refetchInterval.value,
-  });
+  const { refetchInterval } = useStateStore();
+  const { data, isLoading, error } = useRecentStockPrices(
+    symbol,
+    howManyValues,
+    true,
+    refetchInterval.value
+  );
 
   if (isLoading) {
     return <TrendCardSkeleton />;
