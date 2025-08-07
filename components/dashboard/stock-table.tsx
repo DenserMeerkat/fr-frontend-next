@@ -26,6 +26,17 @@ import { Skeleton } from "../ui/skeleton";
 
 const PERIOD_NUMBER = 200;
 
+const tableHeads: string[] = [
+  "Symbol",
+  "Period",
+  "Opening Price",
+  "Closing Price",
+  "Max Price",
+  "Min Price",
+  "Start Time",
+  "End Time",
+];
+
 export function StockTable() {
   const [selectedGroup, setSelectedGroup] = React.useState<StockGroup>(
     stockGroupsData[0]
@@ -71,16 +82,35 @@ export function StockTable() {
     }
   };
 
-  const tableHeads: string[] = [
-    "Symbol",
-    "Period",
-    "Opening Price",
-    "Closing Price",
-    "Max Price",
-    "Min Price",
-    "Start Time",
-    "End Time",
-  ];
+  const averages = React.useMemo(() => {
+    if (tableData.length === 0) {
+      return null;
+    }
+
+    const sumOpening = tableData.reduce(
+      (sum, stock) => sum + (stock.openingPrice || 0),
+      0
+    );
+    const sumClosing = tableData.reduce(
+      (sum, stock) => sum + (stock.closingPrice || 0),
+      0
+    );
+    const sumMax = tableData.reduce(
+      (sum, stock) => sum + (stock.maxPrice || 0),
+      0
+    );
+    const sumMin = tableData.reduce(
+      (sum, stock) => sum + (stock.minPrice || 0),
+      0
+    );
+
+    return {
+      openingPrice: (sumOpening / tableData.length).toFixed(2),
+      closingPrice: (sumClosing / tableData.length).toFixed(2),
+      maxPrice: (sumMax / tableData.length).toFixed(2),
+      minPrice: (sumMin / tableData.length).toFixed(2),
+    };
+  }, [tableData]);
 
   return (
     <div>
@@ -89,7 +119,7 @@ export function StockTable() {
           value={selectedGroup.groupName}
           onValueChange={handleGroupChange}
         >
-          <SelectTrigger>
+          <SelectTrigger disabled={isLoading}>
             <SelectValue placeholder="Select a group" />
           </SelectTrigger>
           <SelectContent align="end">
@@ -187,6 +217,24 @@ export function StockTable() {
               </>
             )}
           </TableBody>
+          {averages && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={2} className="font-medium">
+                  Average Prices
+                </TableCell>
+                <TableCell className="font-bold">
+                  {averages.openingPrice}
+                </TableCell>
+                <TableCell className="font-bold">
+                  {averages.closingPrice}
+                </TableCell>
+                <TableCell className="font-bold">{averages.maxPrice}</TableCell>
+                <TableCell className="font-bold">{averages.minPrice}</TableCell>
+                <TableCell colSpan={2}></TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
         </Table>
       </div>
     </div>
