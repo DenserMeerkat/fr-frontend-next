@@ -48,7 +48,7 @@ export interface StockPrice {
   symbol: string;
   price: number;
   periodNumber: number;
-  timeStamp: Date;
+  timeStamp: string;
 }
 
 export interface StockPeriod {
@@ -58,8 +58,8 @@ export interface StockPeriod {
   closingPrice: number;
   maxPrice: number;
   minPrice: number;
-  periodStartTime: Date;
-  periodEndTime: Date;
+  periodStartTime: string;
+  periodEndTime: string;
   periodNumber: number;
 }
 
@@ -83,4 +83,10 @@ export interface StockFilters {
   periodNumber?: number;
   howManyValues?: number;
   whatTime?: string;
+}
+
+export interface StockGroup {
+  groupName: string;
+  description: string;
+  companies: StockSymbol[];
 }
