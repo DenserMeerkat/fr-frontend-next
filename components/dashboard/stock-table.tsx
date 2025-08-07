@@ -181,19 +181,13 @@ export function StockTable() {
             ) : (
               <>
                 {tableData.map((stock: StockPeriod) => (
-                  <TableRow key={stock.symbol}>
+                  <TableRow key={stock.symbol} className="font-medium">
                     <TableCell className="font-bold uppercase">
                       {stock.symbol}
                     </TableCell>
-                    <TableCell className="font-medium">
-                      {stock.periodNumber}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {stock.openingPrice}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {stock.closingPrice}
-                    </TableCell>
+                    <TableCell>{stock.periodNumber}</TableCell>
+                    <TableCell>{stock.openingPrice}</TableCell>
+                    <TableCell>{stock.closingPrice}</TableCell>
                     <TableCell
                       className="font-bold"
                       style={{ color: "var(--positive-color)" }}
@@ -206,34 +200,51 @@ export function StockTable() {
                     >
                       {stock.minPrice}
                     </TableCell>
-                    <TableCell className="font-medium">
-                      {stock.periodStartTime}
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      {stock.periodEndTime}
-                    </TableCell>
+                    <TableCell>{stock.periodStartTime}</TableCell>
+                    <TableCell>{stock.periodEndTime}</TableCell>
                   </TableRow>
                 ))}
               </>
             )}
           </TableBody>
-          {averages && (
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={2} className="font-medium">
-                  Average Prices
-                </TableCell>
-                <TableCell className="font-bold">
-                  {averages.openingPrice}
-                </TableCell>
-                <TableCell className="font-bold">
-                  {averages.closingPrice}
-                </TableCell>
-                <TableCell className="font-bold">{averages.maxPrice}</TableCell>
-                <TableCell className="font-bold">{averages.minPrice}</TableCell>
-                <TableCell colSpan={2}></TableCell>
-              </TableRow>
-            </TableFooter>
+          {isLoading ? (
+            <>
+              <TableFooter>
+                <TableRow>
+                  <TableCell colSpan={2}>
+                    <Skeleton className="w-24 h-5" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="w-12 h-5" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="w-12 h-5" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="w-12 h-5" />
+                  </TableCell>
+                  <TableCell>
+                    <Skeleton className="w-12 h-5" />
+                  </TableCell>
+                  <TableCell colSpan={2}></TableCell>
+                </TableRow>
+              </TableFooter>
+            </>
+          ) : (
+            <>
+              {averages && (
+                <TableFooter>
+                  <TableRow className="font-bold">
+                    <TableCell colSpan={2}>Average Prices</TableCell>
+                    <TableCell>{averages.openingPrice}</TableCell>
+                    <TableCell>{averages.closingPrice}</TableCell>
+                    <TableCell>{averages.maxPrice}</TableCell>
+                    <TableCell>{averages.minPrice}</TableCell>
+                    <TableCell colSpan={2}></TableCell>
+                  </TableRow>
+                </TableFooter>
+              )}
+            </>
           )}
         </Table>
       </div>
