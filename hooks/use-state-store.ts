@@ -5,6 +5,8 @@ import { create } from "zustand";
 interface StateProps {
   refetchInterval: RefetchInterval;
   setRefetchInterval: (interval: RefetchInterval) => void;
+  notifSidebarState: boolean;
+  setNotifSidebarState: (open: boolean) => void;
 }
 
 export const useStateStore = create<StateProps>()((set) => ({
@@ -14,4 +16,12 @@ export const useStateStore = create<StateProps>()((set) => ({
     set(() => ({
       refetchInterval: interval,
     })),
+
+  notifSidebarState: false,
+
+  setNotifSidebarState: (open) => {
+    set(() => ({
+      notifSidebarState: open,
+    }));
+  },
 }));

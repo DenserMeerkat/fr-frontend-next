@@ -30,7 +30,6 @@ const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
-const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
@@ -53,19 +52,35 @@ function useSidebar() {
   return context;
 }
 
+type KeyboardShortcutConfig = {
+  key: string;
+  altKey?: boolean;
+  ctrlOrMetaKey?: boolean;
+  shiftKey?: boolean;
+};
+
+type SidebarProviderProps = React.ComponentProps<"div"> & {
+  defaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  keyboardShortcut?: KeyboardShortcutConfig | null;
+};
+
+const DEFAULT_KEYBOARD_SHORTCUT: KeyboardShortcutConfig = {
+  key: "b",
+  ctrlOrMetaKey: true,
+};
+
 function SidebarProvider({
   defaultOpen = true,
   open: openProp,
   onOpenChange: setOpenProp,
+  keyboardShortcut = DEFAULT_KEYBOARD_SHORTCUT,
   className,
   style,
   children,
   ...props
-}: React.ComponentProps<"div"> & {
-  defaultOpen?: boolean;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}) {
+}: SidebarProviderProps) {
   const isMobile = useIsMobile();
   const [openMobile, setOpenMobile] = React.useState(false);
 
@@ -95,11 +110,25 @@ function SidebarProvider({
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
+    if (!keyboardShortcut) return;
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-        (event.metaKey || event.ctrlKey)
-      ) {
+      const {
+        key,
+        altKey = false,
+        ctrlOrMetaKey = false,
+        shiftKey = false,
+      } = keyboardShortcut;
+
+      const isCtrlOrMeta = event.ctrlKey || event.metaKey;
+
+      const matches =
+        event.key.toLowerCase() === key.toLowerCase() &&
+        isCtrlOrMeta === ctrlOrMetaKey &&
+        event.altKey === altKey &&
+        event.shiftKey === shiftKey;
+
+      if (matches) {
         event.preventDefault();
         toggleSidebar();
       }
@@ -107,7 +136,7 @@ function SidebarProvider({
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [toggleSidebar]);
+  }, [toggleSidebar, keyboardShortcut]);
 
   // We add a state so that we can do data-state="expanded" or "collapsed".
   // This makes it easier to style the sidebar with Tailwind classes.
@@ -266,7 +295,7 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn("size-7", className)}
+      className={className}
       onClick={(event) => {
         onClick?.(event);
         toggleSidebar();
