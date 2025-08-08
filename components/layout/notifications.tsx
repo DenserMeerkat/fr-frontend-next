@@ -16,6 +16,7 @@ import {
   BellIcon,
   NewspaperIcon,
   WalletIcon,
+  XIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -160,19 +161,35 @@ const getNotificationIcon = (type: string) => {
   }
 };
 
-const NotificationsHeader = () => (
-  <div className="flex justify-between items-center gap-2 p-2">
-    <BellIcon className="size-4" />
-    <h4 className="font-semibold">Notifications</h4>
-
-    <Badge className="px-1 font-mono tabular-nums" variant="destructive">
-      {mockNotifications.length ?? 0}
-    </Badge>
-  </div>
-);
+const NotificationsHeader = () => {
+  const { setNotifSidebarState } = useStateStore();
+  return (
+    <div className="flex justify-between items-center gap-2 md:p-2">
+      <div className="relative">
+        <Badge
+          className="absolute -top-3 -right-3 px-1 text-[0.5rem] font-mono tabular-nums"
+          variant="destructive"
+        >
+          {mockNotifications.length ?? 0}
+        </Badge>
+        <BellIcon className="size-4" />
+      </div>
+      <h4 className="font-semibold">Notifications</h4>
+      <Button
+        variant="outline"
+        size="icon"
+        className="cursor-pointer size-7"
+        onClick={() => setNotifSidebarState(false)}
+      >
+        <XIcon />
+        <span className="sr-only">Close Notification Sidebar</span>
+      </Button>
+    </div>
+  );
+};
 
 const NotificationsContent = () => (
-  <SidebarMenu className="p-0">
+  <SidebarMenu className="pr-2">
     <NotificationList />
   </SidebarMenu>
 );
@@ -184,8 +201,8 @@ const NotificationList = () => {
         <Card
           key={notification.id}
           className={cn(
-            "transition-colors cursor-pointer items-start gap-2 rounded-lg border-0 py-3 min-w-0",
-            !notification.read && "bg-muted"
+            "transition-colors cursor-pointer items-start gap-2 rounded-lg border border-border/60 py-3 min-w-0 my-1",
+            notification.read && "bg-muted"
           )}
         >
           <CardHeader className="w-full px-3">
@@ -198,8 +215,8 @@ const NotificationList = () => {
           <CardContent className="px-3">
             <p className="text-xs">{notification.message}</p>
           </CardContent>
-          <CardFooter>
-            <p className="ml-auto text-xs">{notification.timestamp}</p>
+          <CardFooter className="w-full">
+            <p className="text-[0.65rem] ml-auto">{notification.timestamp}</p>
           </CardFooter>
         </Card>
       ))}
@@ -244,7 +261,7 @@ const Notifications = () => {
           <DrawerTitle hidden>Notification</DrawerTitle>
           <NotificationsHeader />
         </DrawerHeader>
-        <ScrollArea className="max-h-[calc(100lvh-9rem)] px-1 pr-2">
+        <ScrollArea className="max-h-[calc(100dvh-8rem)] px-1 pr-2 bg-muted">
           <NotificationList />
         </ScrollArea>
         <DrawerFooter className="border-t">
