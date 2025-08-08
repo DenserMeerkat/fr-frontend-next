@@ -37,41 +37,87 @@ const tableHeads: string[] = [
   "End Time",
 ];
 
+function StockRow({
+  symbol,
+  companyName,
+  onDataFetched,
+}: {
+  symbol: string;
+  companyName: string;
+  onDataFetched: (data: StockPeriod) => void;
+}) {
+  const {
+    data: stock,
+    isLoading,
+    error,
+  } = usePeriodStats(symbol, PERIOD_NUMBER);
+
+  React.useEffect(() => {
+    if (stock) {
+      onDataFetched(stock);
+    }
+  }, [stock, onDataFetched]);
+
+  if (isLoading) {
+    return (
+      <TableRow>
+        {Array.from({ length: tableHeads.length }).map((_, index) => (
+          <TableCell key={index}>
+            <Skeleton className="w-12 h-5" />
+          </TableCell>
+        ))}
+      </TableRow>
+    );
+  }
+
+  if (error) {
+    return null;
+  }
+
+  if (!stock) {
+    return null;
+  }
+
+  return (
+    <TableRow className="font-medium">
+      <TableCell className="font-bold uppercase">{stock.symbol}</TableCell>
+      <TableCell>{stock.periodNumber}</TableCell>
+      <TableCell>{stock.openingPrice}</TableCell>
+      <TableCell>{stock.closingPrice}</TableCell>
+      <TableCell
+        className="font-bold"
+        style={{ color: "var(--positive-color)" }}
+      >
+        {stock.maxPrice}
+      </TableCell>
+      <TableCell
+        className="font-bold"
+        style={{ color: "var(--negative-color)" }}
+      >
+        {stock.minPrice}
+      </TableCell>
+      <TableCell>{stock.periodStartTime}</TableCell>
+      <TableCell>{stock.periodEndTime}</TableCell>
+    </TableRow>
+  );
+}
+
 export function StockTable() {
   const [selectedGroup, setSelectedGroup] = React.useState<StockGroup>(
     stockGroupsData[0]
   );
 
+  const [tableData, setTableData] = React.useState<StockPeriod[]>([]);
   const selectedCompanies = selectedGroup.companies;
-  const symbolsToFetch = React.useMemo(() => {
-    return selectedCompanies.map((company) => company.symbol);
-  }, [selectedCompanies]);
 
-  const stockQueries = symbolsToFetch.map((symbol) =>
-    usePeriodStats(symbol, PERIOD_NUMBER, !!symbol)
-  );
-
-  const tableData: StockPeriod[] = React.useMemo(() => {
-    const allData: StockPeriod[] = [];
-    stockQueries.forEach((query, index) => {
-      if (!symbolsToFetch[index] || !query.data) {
-        return;
+  const handleDataFetched = React.useCallback((newStockData: StockPeriod) => {
+    setTableData((prevData) => {
+      if (!prevData.find((stock) => stock.symbol === newStockData.symbol)) {
+        return [...prevData, newStockData];
       }
-
-      const companyData = {
-        ...query.data,
-        companyName: selectedCompanies[index]?.companyName || query.data.symbol,
-      };
-
-      allData.push(companyData);
+      return prevData;
     });
-    return allData;
-  }, [stockQueries, selectedCompanies, symbolsToFetch]);
-
-  const isLoading = stockQueries.some(
-    (q, i) => !!symbolsToFetch[i] && q.isLoading
-  );
-  const hasError = stockQueries.some((q, i) => !!symbolsToFetch[i] && q.error);
+  }, []);
 
   const handleGroupChange = (groupName: string) => {
     const newGroup = stockGroupsData.find(
@@ -82,6 +128,58 @@ export function StockTable() {
     }
   };
 
+  return (
+    <div>
+      <div className="mb-4 flex justify-center sm:justify-end items-center">
+        <Select
+          value={selectedGroup.groupName}
+          onValueChange={handleGroupChange}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select a group" />
+          </SelectTrigger>
+          <SelectContent align="end">
+            {stockGroupsData.map((group) => (
+              <SelectItem key={group.groupName} value={group.groupName}>
+                {group.groupName}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="rounded-xl border overflow-clip">
+        <Table>
+          <TableCaption hidden>Stock Period Data</TableCaption>
+          <TableHeader>
+            <TableRow className="bg-muted">
+              {tableHeads.map((head) => (
+                <TableHead
+                  key={head}
+                  className={cn("font-bold dark:font-medium")}
+                >
+                  {head}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {selectedCompanies.map((company) => (
+              <StockRow
+                key={company.symbol}
+                symbol={company.symbol}
+                companyName={company.companyName}
+                onDataFetched={handleDataFetched}
+              />
+            ))}
+          </TableBody>
+          <AveragesFooter tableData={tableData} />
+        </Table>
+      </div>
+    </div>
+  );
+}
+
+export function AveragesFooter({ tableData }: { tableData: StockPeriod[] }) {
   const averages = React.useMemo(() => {
     if (tableData.length === 0) {
       return null;
@@ -112,142 +210,20 @@ export function StockTable() {
     };
   }, [tableData]);
 
+  if (!averages) {
+    return null;
+  }
+
   return (
-    <div>
-      <div className="mb-4 flex justify-center sm:justify-end items-center">
-        <Select
-          value={selectedGroup.groupName}
-          onValueChange={handleGroupChange}
-        >
-          <SelectTrigger disabled={isLoading}>
-            <SelectValue placeholder="Select a group" />
-          </SelectTrigger>
-          <SelectContent align="end">
-            {stockGroupsData.map((group) => (
-              <SelectItem key={group.groupName} value={group.groupName}>
-                {group.groupName}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="rounded-xl border overflow-clip">
-        <Table>
-          <TableCaption hidden>Stock Period Data</TableCaption>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              {tableHeads.map((head, index) => {
-                return (
-                  <TableHead
-                    key={head}
-                    className={cn("font-bold dark:font-medium")}
-                  >
-                    {head}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading ? (
-              <>
-                {Array.from({ length: 10 }, (i) => {
-                  i;
-                }).map((_, index) => (
-                  <TableRow key={index}>
-                    {Array.from({ length: tableHeads.length }, (i) => {
-                      i;
-                    }).map((_, index) => (
-                      <TableCell
-                        key={index}
-                        colSpan={1}
-                        className="text-center"
-                      >
-                        <Skeleton className="w-12 h-5" />
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))}
-              </>
-            ) : hasError ? (
-              <TableRow>
-                <TableCell
-                  colSpan={8}
-                  className="h-24 text-center text-destructive"
-                >
-                  <div>Error loading data:</div>
-                </TableCell>
-              </TableRow>
-            ) : (
-              <>
-                {tableData.map((stock: StockPeriod) => (
-                  <TableRow key={stock.symbol} className="font-medium">
-                    <TableCell className="font-bold uppercase">
-                      {stock.symbol}
-                    </TableCell>
-                    <TableCell>{stock.periodNumber}</TableCell>
-                    <TableCell>{stock.openingPrice}</TableCell>
-                    <TableCell>{stock.closingPrice}</TableCell>
-                    <TableCell
-                      className="font-bold"
-                      style={{ color: "var(--positive-color)" }}
-                    >
-                      {stock.maxPrice}
-                    </TableCell>
-                    <TableCell
-                      className="font-bold"
-                      style={{ color: "var(--negative-color)" }}
-                    >
-                      {stock.minPrice}
-                    </TableCell>
-                    <TableCell>{stock.periodStartTime}</TableCell>
-                    <TableCell>{stock.periodEndTime}</TableCell>
-                  </TableRow>
-                ))}
-              </>
-            )}
-          </TableBody>
-          {isLoading ? (
-            <>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={2}>
-                    <Skeleton className="w-24 h-5" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="w-12 h-5" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="w-12 h-5" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="w-12 h-5" />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton className="w-12 h-5" />
-                  </TableCell>
-                  <TableCell colSpan={2}></TableCell>
-                </TableRow>
-              </TableFooter>
-            </>
-          ) : (
-            <>
-              {averages && (
-                <TableFooter>
-                  <TableRow className="font-bold">
-                    <TableCell colSpan={2}>Average Prices</TableCell>
-                    <TableCell>{averages.openingPrice}</TableCell>
-                    <TableCell>{averages.closingPrice}</TableCell>
-                    <TableCell>{averages.maxPrice}</TableCell>
-                    <TableCell>{averages.minPrice}</TableCell>
-                    <TableCell colSpan={2}></TableCell>
-                  </TableRow>
-                </TableFooter>
-              )}
-            </>
-          )}
-        </Table>
-      </div>
-    </div>
+    <TableFooter>
+      <TableRow className="font-bold">
+        <TableCell colSpan={2}>Average Prices</TableCell>
+        <TableCell>{averages.openingPrice}</TableCell>
+        <TableCell>{averages.closingPrice}</TableCell>
+        <TableCell>{averages.maxPrice}</TableCell>
+        <TableCell>{averages.minPrice}</TableCell>
+        <TableCell colSpan={2}></TableCell>
+      </TableRow>
+    </TableFooter>
   );
 }
