@@ -1,3 +1,5 @@
+"use client";
+
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -5,11 +7,14 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { app, navItems } from "@/constants";
 import Link from "next/link";
 
 export function NavMain() {
+  const { isMobile, openMobile, setOpenMobile } = useSidebar();
+
   return (
     <SidebarGroup>
       <SidebarGroupContent className="flex flex-col gap-2">
@@ -17,7 +22,14 @@ export function NavMain() {
         <SidebarMenu>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <Link href={item.url}>
+              <Link
+                href={item.url}
+                onClick={
+                  isMobile && openMobile
+                    ? () => setOpenMobile(false)
+                    : undefined
+                }
+              >
                 <SidebarMenuButton
                   tooltip={item.title}
                   className="cursor-pointer"
