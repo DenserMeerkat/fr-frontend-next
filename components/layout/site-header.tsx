@@ -18,6 +18,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { navItems } from "@/constants";
 import { usePathname } from "next/navigation";
+import { Button } from "../ui/button";
+import { useStateStore } from "@/hooks/use-state-store";
+import { PanelRight } from "lucide-react";
 
 function useBreadcrumbItems() {
   const pathname = usePathname();
@@ -61,7 +64,7 @@ export function SiteHeader() {
     return (
       <header className="bg-background sticky top-0 z-50 flex h-(--header-height) shrink-0 items-center gap-2 rounded-t-xl border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
         <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-          <SidebarTrigger className="-ml-1 cursor-pointer" />
+          <AppSidebarTrigger />
           <Separator
             orientation="vertical"
             className="mx-2 data-[orientation=vertical]:h-4"
@@ -177,10 +180,10 @@ export function SiteHeader() {
   return (
     <header className="bg-background sticky top-0 z-50 flex h-(--header-height) shrink-0 items-center gap-2 rounded-t-xl border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <SidebarTrigger className="-ml-1 cursor-pointer" />
+        <AppSidebarTrigger />
         <Separator
           orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
+          className="mr-2 data-[orientation=vertical]:h-4"
         />
 
         <Breadcrumb>
@@ -189,8 +192,30 @@ export function SiteHeader() {
 
         <div className="ml-auto flex items-center gap-2">
           <ModeToggle className="-mr-1" />
+          <NotifSidebarTrigger />
         </div>
       </div>
     </header>
   );
 }
+
+const AppSidebarTrigger = () => {
+  return <SidebarTrigger className="-ml-1 cursor-pointer" />;
+};
+
+const NotifSidebarTrigger = () => {
+  const { notifSidebarState, setNotifSidebarState } = useStateStore();
+  return (
+    <Button
+      data-sidebar="trigger"
+      data-slot="sidebar-trigger"
+      variant="ghost"
+      size="icon"
+      className="cursor-pointer"
+      onClick={() => setNotifSidebarState(!notifSidebarState)}
+    >
+      <PanelRight />
+      <span className="sr-only">Toggle Notification Sidebar</span>
+    </Button>
+  );
+};
