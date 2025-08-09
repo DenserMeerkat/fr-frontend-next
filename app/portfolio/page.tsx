@@ -1,7 +1,9 @@
+import { PortfolioDataTable } from "@/components/portfolio/portfolio-table";
+
 export default function Portfolio() {
   return (
-    <main className="grid h-full place-content-center">
-      <span className="text-4xl font-bold opacity-10">Portfolio</span>
+    <main className="@container/main h-full px-6">
+      <PortfolioDataTable />
     </main>
   );
 }

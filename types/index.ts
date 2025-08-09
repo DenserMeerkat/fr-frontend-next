@@ -1,9 +1,3 @@
-export interface ApiResponse<T> {
-  data: T;
-  success: boolean;
-  message?: string;
-}
-
 export const RefetchIntervals = {
   ONE_SECOND: { label: "1 second", value: 1000 },
   FIVE_SECONDS: { label: "5 seconds", value: 5 * 1000 },

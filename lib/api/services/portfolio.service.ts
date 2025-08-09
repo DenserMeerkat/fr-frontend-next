@@ -1,11 +1,10 @@
 import { tradingApiClient as apiClient } from "../client";
-import type { Portfolio, ApiResponse } from "@/types";
+import type { Portfolio } from "@/types";
 
 export const portfolioService = {
   async getPortfolio(): Promise<Portfolio[]> {
-    const response =
-      await apiClient.get<ApiResponse<Portfolio[]>>("/portfolio");
-    return response.data;
+    const data = await apiClient.get<Portfolio[]>("/portfolio");
+    return data;
   },
 
   async getPortfolioByTicker(stockTicker: string): Promise<Portfolio | null> {

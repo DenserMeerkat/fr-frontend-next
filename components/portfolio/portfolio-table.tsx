@@ -26,55 +26,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { useOrders } from "@/hooks/queries/use-orders";
-import { Order, OrderType } from "@/types";
+import { usePortfolio } from "@/hooks/queries/use-portfolio";
+import { Portfolio } from "@/types";
 import TableHeaderComponent from "../common/data-table.tsx/table-header";
 import ColumnVisibilityToggle from "../common/data-table.tsx/column-visibility";
 
-const ALL_FILTER = "all";
 const SKELETON_ROWS = 10;
-const SKELETON_COLUMNS = 7;
-
-const getStatusText = (statusCode: number): string => {
-  const statusMap: Record<number, string> = {
-    0: "pending",
-    1: "processing",
-    2: "success",
-    3: "failed",
-  };
-  return statusMap[statusCode] ?? "unknown";
-};
-
-const getStatusColor = (statusCode: number): string => {
-  const colorMap: Record<number, string> = {
-    0: "text-yellow-600",
-    1: "text-blue-600",
-    2: "text-green-600",
-    3: "text-red-600",
-  };
-  return colorMap[statusCode] ?? "text-gray-600";
-};
-
-const exactMatchFilter = (
-  row: any,
-  columnId: string,
-  filterValue: string
-): boolean => {
-  if (filterValue === ALL_FILTER || filterValue === undefined) {
-    return true;
-  }
-  return row.getValue(columnId) === Number(filterValue);
-};
+const SKELETON_COLUMNS = 5;
 
 const SortableHeader: React.FC<{ column: any; children: React.ReactNode }> = ({
   column,
@@ -89,7 +49,7 @@ const SortableHeader: React.FC<{ column: any; children: React.ReactNode }> = ({
   </Button>
 );
 
-const ActionsCell: React.FC<{ order: Order }> = ({ order }) => (
+const ActionsCell: React.FC<{ portfolio: Portfolio }> = ({ portfolio }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="ghost" className="h-8 w-8 p-0">
@@ -100,19 +60,19 @@ const ActionsCell: React.FC<{ order: Order }> = ({ order }) => (
     <DropdownMenuContent align="end">
       <DropdownMenuLabel>Actions</DropdownMenuLabel>
       <DropdownMenuItem
-        onClick={() => navigator.clipboard.writeText(order.id.toString())}
+        onClick={() => navigator.clipboard.writeText(portfolio.stockTicker)}
       >
-        Copy order ID
+        Copy stock ticker
       </DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>View order details</DropdownMenuItem>
-      <DropdownMenuItem>Cancel order</DropdownMenuItem>
-      <DropdownMenuItem>Modify order</DropdownMenuItem>
+      <DropdownMenuItem>View stock details</DropdownMenuItem>
+      <DropdownMenuItem>Buy more shares</DropdownMenuItem>
+      <DropdownMenuItem>Sell shares</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
 );
 
-export const columns: ColumnDef<Order>[] = [
+export const columns: ColumnDef<Portfolio>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -136,36 +96,15 @@ export const columns: ColumnDef<Order>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Order ID</SortableHeader>
-    ),
-    cell: ({ row }) => <div className="font-medium">{row.getValue("id")}</div>,
-  },
-  {
     accessorKey: "stockTicker",
     header: ({ column }) => (
       <SortableHeader column={column}>Stock Ticker</SortableHeader>
     ),
     cell: ({ row }) => (
-      <div className="font-mono uppercase">{row.getValue("stockTicker")}</div>
+      <div className="font-mono uppercase font-medium">
+        {row.getValue("stockTicker")}
+      </div>
     ),
-  },
-  {
-    accessorKey: "buyOrSell",
-    header: "Type",
-    cell: ({ row }) => {
-      const type = row.getValue("buyOrSell") as OrderType;
-      const colorClass = type === "BUY" ? "text-positive" : "text-negative";
-
-      return (
-        <div
-          className={`capitalize font-semibold dark:font-medium ${colorClass}`}
-        >
-          {type}
-        </div>
-      );
-    },
   },
   {
     accessorKey: "volume",
@@ -178,44 +117,44 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "value",
     header: ({ column }) => (
-      <SortableHeader column={column}>Price</SortableHeader>
+      <SortableHeader column={column}>Total Value</SortableHeader>
     ),
     cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"));
+      const value = parseFloat(row.getValue("value"));
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
-      }).format(price);
+      }).format(value);
       return <div className="font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: "statusCode",
-    header: "Status",
-    filterFn: exactMatchFilter,
+    accessorKey: "pricePerShare",
+    header: ({ column }) => (
+      <SortableHeader column={column}>Price per Share</SortableHeader>
+    ),
     cell: ({ row }) => {
-      const statusCode = row.getValue("statusCode") as number;
-      const statusText = getStatusText(statusCode);
-      const statusColor = getStatusColor(statusCode);
+      const value = parseFloat(row.getValue("value"));
+      const volume = parseInt(row.getValue("volume"));
+      const pricePerShare = volume > 0 ? value / volume : 0;
 
-      return (
-        <div
-          className={`capitalize font-semibold dark:font-medium ${statusColor}`}
-        >
-          {statusText}
-        </div>
-      );
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(pricePerShare);
+
+      return <div className="font-medium">{formatted}</div>;
     },
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "tradeTime",
     header: ({ column }) => (
-      <SortableHeader column={column}>Created At</SortableHeader>
+      <SortableHeader column={column}>Last Trade</SortableHeader>
     ),
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createdAt"));
+      const date = new Date(row.getValue("tradeTime"));
       return (
         <div className="text-sm">
           {date.toLocaleDateString()} {date.toLocaleTimeString()}
@@ -226,17 +165,34 @@ export const columns: ColumnDef<Order>[] = [
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsCell order={row.original} />,
+    cell: ({ row }) => <ActionsCell portfolio={row.original} />,
   },
 ];
 
-const OrdersDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
+const PortfolioDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
   Header,
 }) => (
   <div className="w-full">
+    <div className="my-4 p-4 bg-muted/50 rounded-lg">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div>
+          <p className="text-sm text-muted-foreground">Value</p>
+          <Skeleton className="h-8 w-24" />
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">Holdings</p>
+
+          <Skeleton className="h-8 w-24" />
+        </div>
+        <div>
+          <p className="text-sm text-muted-foreground">Shares</p>
+
+          <Skeleton className="h-8 w-24" />
+        </div>
+      </div>
+    </div>
     <div className="flex items-center py-4 space-x-2">
       <Skeleton className="h-8 w-full max-w-72" />
-      <Skeleton className="h-8 w-full max-w-36" />
       <DropdownMenu>
         <DropdownMenuTrigger asChild disabled>
           <Button variant="outline" className="ml-auto">
@@ -270,38 +226,8 @@ const OrdersDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
   </div>
 );
 
-const StatusFilter: React.FC<{ table: any }> = ({ table }) => (
-  <Select
-    value={(table.getColumn("statusCode")?.getFilterValue() as string) ?? ""}
-    onValueChange={(value) =>
-      table.getColumn("statusCode")?.setFilterValue(value)
-    }
-    defaultValue={ALL_FILTER}
-  >
-    <SelectTrigger className="w-[140px]">
-      <SelectValue placeholder="Status" className="capitalize" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectGroup>
-        <SelectItem value={ALL_FILTER} className="capitalize">
-          {ALL_FILTER}
-        </SelectItem>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <SelectItem key={index} value={`${index}`} className="capitalize">
-            {getStatusText(index)}
-          </SelectItem>
-        ))}
-      </SelectGroup>
-    </SelectContent>
-  </Select>
-);
-
-interface OrdersDataTableProps {
-  filters?: any;
-}
-
-export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
-  const { data: orders = [], isLoading, error } = useOrders(filters);
+export function PortfolioDataTable() {
+  const { data: portfolio = [], isLoading, error } = usePortfolio();
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -312,7 +238,7 @@ export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
-    data: orders,
+    data: portfolio,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -333,21 +259,50 @@ export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
   const HeaderComponent = () => <TableHeaderComponent table={table} />;
 
   if (isLoading) {
-    return <OrdersDataTableSkeleton Header={HeaderComponent} />;
+    return <PortfolioDataTableSkeleton Header={HeaderComponent} />;
   }
 
   if (error) {
     return (
       <div className="w-full">
         <div className="flex items-center justify-center h-64">
-          <div className="text-negative">Error loading orders</div>
+          <div className="text-negative">Error loading portfolio</div>
         </div>
       </div>
     );
   }
 
+  const totalValue = portfolio.reduce((sum, item) => sum + item.value, 0);
+  const totalShares = portfolio.reduce((sum, item) => sum + item.volume, 0);
+
   return (
     <div className="w-full">
+      <div className="my-4 p-4 bg-muted/50 rounded-lg">
+        <div className="grid grid-cols-3 gap-4">
+          <div>
+            <p className="text-sm text-muted-foreground">Value</p>
+            <p className="sm:text-xl md:text-2xl font-bold">
+              {new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(totalValue)}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Holdings</p>
+            <p className="sm:text-xl md:text-2xl font-bold">
+              {portfolio.length}
+            </p>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground">Shares</p>
+            <p className="sm:text-xl md:text-2xl font-bold">
+              {totalShares.toLocaleString()}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="flex items-center py-4 space-x-2">
         <Input
           placeholder="Filter by stock ticker..."
@@ -359,7 +314,6 @@ export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
           }
           className="max-w-72"
         />
-        <StatusFilter table={table} />
         <ColumnVisibilityToggle table={table} />
       </div>
 
@@ -389,7 +343,7 @@ export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No orders found.
+                  No portfolio items found.
                 </TableCell>
               </TableRow>
             )}
