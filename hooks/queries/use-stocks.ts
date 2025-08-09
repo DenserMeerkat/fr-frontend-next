@@ -59,6 +59,8 @@ export const usePeriodStats = (
     queryKey: queryKeys.stocks.periods.statsBySymbol(symbol, periodNumber),
     queryFn: () => stocksService.getPeriodStats({ symbol, periodNumber }),
     enabled: enabled && !!symbol && !!periodNumber,
+    staleTime: 10 * 60 * 1000,
+    gcTime: 60 * 60 * 1000,
   });
 };
 

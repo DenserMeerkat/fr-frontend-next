@@ -1,7 +1,9 @@
+import { OrdersDataTable } from "@/components/orders/orders-table";
+
 export default function Orders() {
   return (
-    <main className="grid h-full place-content-center">
-      <span className="text-4xl font-bold opacity-10">Orders</span>
+    <main className="@container/main h-full px-6">
+      <OrdersDataTable />
     </main>
   );
 }

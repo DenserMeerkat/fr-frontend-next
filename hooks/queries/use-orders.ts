@@ -7,7 +7,7 @@ export const useOrders = (filters: OrderFilters = {}) => {
   return useQuery({
     queryKey: queryKeys.orders.list(filters),
     queryFn: () => ordersService.getOrders(filters),
-    staleTime: 2 * 60 * 1000, // 2 minutes
+    staleTime: 2 * 60 * 1000,
   });
 };
 
@@ -16,7 +16,7 @@ export const useOrder = (id: number, enabled = true) => {
     queryKey: queryKeys.orders.detail(id),
     queryFn: () => ordersService.getOrderById(id),
     enabled: enabled && !!id,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 };
 

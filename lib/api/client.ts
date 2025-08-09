@@ -1,6 +1,6 @@
 const STOCK_API_URL = process.env.NEXT_PUBLIC_STOCK_API_URL || "/api/stock";
 const TRADING_API_URL =
-  process.env.NEXT_PUBLIC_TRADING_API_URL || "/api/trading";
+  process.env.NEXT_PUBLIC_TRADING_API_URL || "http://localhost:8080";
 
 class ApiClient {
   private baseURL: string;

@@ -9,7 +9,7 @@ export const RefetchIntervals = {
   FIVE_SECONDS: { label: "5 seconds", value: 5 * 1000 },
   TEN_SECONDS: { label: "10 seconds", value: 10 * 1000 },
   ONE_MINUTE: { label: "1 minute", value: 60 * 1000 },
-  FIVE_MINUTES: { label: "5 minutes", value: 300 * 1000 },
+  FIVE_MINUTES: { label: "5 minutes", value: 5 * 60 * 1000 },
 } as const;
 
 export type RefetchInterval =

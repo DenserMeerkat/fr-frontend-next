@@ -3,30 +3,23 @@ import type {
   Order,
   CreateOrderRequest,
   OrderFilters,
-  ApiResponse,
   OrderType,
 } from "@/types";
 
 export const ordersService = {
   async getOrders(filters: OrderFilters = {}): Promise<Order[]> {
-    const response = await apiClient.get<ApiResponse<Order[]>>(
-      "/orders",
-      filters
-    );
-    return response.data;
+    const data = await apiClient.get<Order[]>("/orders", filters);
+    return data || [];
   },
 
   async getOrderById(id: number): Promise<Order> {
-    const response = await apiClient.get<ApiResponse<Order>>(`/orders/${id}`);
-    return response.data;
+    const data = await apiClient.get<Order>(`/orders/${id}`);
+    return data;
   },
 
   async createOrder(orderData: CreateOrderRequest): Promise<Order> {
-    const response = await apiClient.post<ApiResponse<Order>>(
-      "/orders",
-      orderData
-    );
-    return response.data;
+    const data = await apiClient.post<Order>("/orders", orderData);
+    return data;
   },
 
   async getOrdersByTicker(stockTicker: string): Promise<Order[]> {
