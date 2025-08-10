@@ -11,6 +11,7 @@ import { Skeleton } from "../ui/skeleton";
 import { Area, AreaChart, YAxis } from "recharts";
 import { useStateStore } from "@/hooks/use-state-store";
 import { useRecentStockPrices } from "@/hooks/queries";
+import Link from "next/link";
 
 const chartConfig = {
   price: {
@@ -44,9 +45,12 @@ export default function TrendCard({
           <CardTitle className="truncate text-xs font-medium tracking-wide">
             Error
           </CardTitle>
-          <span className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs font-medium tracking-widest uppercase">
+          <Link
+            href={`/dashboard/${symbol.toLowerCase()}`}
+            className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs font-medium tracking-widest uppercase"
+          >
             {symbol}
-          </span>
+          </Link>
         </CardHeader>
         <CardContent className="p-0">
           <div>
@@ -88,11 +92,19 @@ export default function TrendCard({
     <Card className="gap-0 overflow-clip p-0">
       <CardHeader className="flex flex-row items-center justify-between px-4 py-2">
         <CardTitle className="text-muted-foreground truncate text-xs font-medium tracking-wide">
-          {data[0]?.companyName || symbol}
+          <Link
+            href={`/dashboard/${symbol.toLowerCase()}`}
+            className="hover:underline"
+          >
+            {data[0]?.companyName || symbol}
+          </Link>
         </CardTitle>
-        <span className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs dark:font-medium font-bold tracking-widest uppercase">
+        <Link
+          href={`/dashboard/${symbol.toLowerCase()}`}
+          className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs font-medium tracking-widest uppercase"
+        >
           {symbol}
-        </span>
+        </Link>
       </CardHeader>
 
       <CardContent className="p-0">

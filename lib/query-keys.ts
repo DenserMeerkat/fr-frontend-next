@@ -1,6 +1,16 @@
 import { OrderFilters, OrderType } from "@/types";
 
 export const queryKeys = {
+  // Cash domain
+  cash: {
+    // Base key for all cash queries
+    all: ["cash"] as const,
+
+    // Detail queries
+    details: () => [...queryKeys.cash.all, "detail"] as const,
+    detail: () => [...queryKeys.cash.details(), "balance"] as const,
+  },
+
   // Orders domain
   orders: {
     // Base key for all order queries

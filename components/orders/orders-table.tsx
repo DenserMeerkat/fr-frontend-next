@@ -245,7 +245,7 @@ const OrdersDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
         </DropdownMenuTrigger>
       </DropdownMenu>
     </div>
-    <div className="pb-4 overflow-hidden rounded-md border">
+    <div className="mb-4 overflow-hidden rounded-md border">
       <Table>
         <Header />
         <TableBody>
@@ -363,7 +363,7 @@ export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
         <ColumnVisibilityToggle table={table} />
       </div>
 
-      <div className="pb-4 overflow-hidden rounded-md border">
+      <div className="mb-4 overflow-hidden rounded-md border">
         <Table>
           <HeaderComponent />
           <TableBody>

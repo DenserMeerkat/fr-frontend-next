@@ -20,14 +20,17 @@ export const useStockDetails = (symbol: string, enabled = true) => {
   });
 };
 
-export const useLatestStockPrice = (symbol: string, enabled = true) => {
+export const useLatestStockPrice = (
+  symbol: string,
+  enabled = true,
+  refetchInterval?: number
+) => {
   return useQuery({
     queryKey: queryKeys.stocks.prices.latestBySymbol(symbol),
     queryFn: () => stocksService.getLatestStockPrice({ symbol }),
     enabled: enabled && !!symbol,
-    staleTime: 10 * 1000,
-    refetchInterval: 30 * 1000,
-    refetchIntervalInBackground: false,
+    staleTime: 60 * 1000,
+    refetchInterval: refetchInterval,
   });
 };
 

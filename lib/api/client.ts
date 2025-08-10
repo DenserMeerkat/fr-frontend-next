@@ -27,7 +27,20 @@ class ApiClient {
       const response = await fetch(url, config);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // You can add more detailed error handling here based on the response body
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+          // If the response body is not JSON, use the default message
+        }
+        throw new Error(errorMessage);
+      }
+
+      // Handle cases where the response body might be empty (e.g., a 204 No Content response)
+      if (response.status === 204) {
+        return null as T; // Return null or some other appropriate value for an empty response
       }
 
       return await response.json();
@@ -48,6 +61,13 @@ class ApiClient {
   async post<T>(endpoint: string, data?: any): Promise<T> {
     return this.request<T>(endpoint, {
       method: "POST",
+      body: data ? JSON.stringify(data) : undefined,
+    });
+  }
+
+  async put<T>(endpoint: string, data?: any): Promise<T> {
+    return this.request<T>(endpoint, {
+      method: "PUT",
       body: data ? JSON.stringify(data) : undefined,
     });
   }

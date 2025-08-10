@@ -11,29 +11,11 @@ export const useOrders = (filters: OrderFilters = {}) => {
   });
 };
 
-export const useOrder = (id: number, enabled = true) => {
-  return useQuery({
-    queryKey: queryKeys.orders.detail(id),
-    queryFn: () => ordersService.getOrderById(id),
-    enabled: enabled && !!id,
-    staleTime: 5 * 60 * 1000,
-  });
-};
-
 export const useOrdersByTicker = (ticker: string, enabled = true) => {
   return useQuery({
     queryKey: queryKeys.orders.byTicker(ticker),
-    queryFn: () => ordersService.getOrdersByTicker(ticker),
+    queryFn: () => ordersService.getOrdersByStockTicker(ticker),
     enabled: enabled && !!ticker,
-    staleTime: 2 * 60 * 1000,
-  });
-};
-
-export const useOrdersByType = (type: OrderType, enabled = true) => {
-  return useQuery({
-    queryKey: queryKeys.orders.byType(type),
-    queryFn: () => ordersService.getOrdersByType(type),
-    enabled: enabled && !!type,
     staleTime: 2 * 60 * 1000,
   });
 };

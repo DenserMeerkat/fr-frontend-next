@@ -8,6 +8,7 @@ import {
   PanelsTopLeftIcon,
   Settings2,
 } from "lucide-react";
+import { IconCash } from "@tabler/icons-react";
 
 export const app = {
   name: "Four Real",
@@ -26,7 +27,7 @@ export const user = {
 export const repos = [
   {
     name: "Frontend",
-    url: "https://bitbucket.org/densermeerkat/fr-frontend/src",
+    url: "https://bitbucket.org/densermeerkat/fr-frontend-next/src",
     icon: AppWindowIcon,
   },
   {
@@ -59,6 +60,12 @@ export const navItems = [
     title: "Portfolio",
     url: "/portfolio",
     icon: BriefcaseBusinessIcon,
+    items: [],
+  },
+  {
+    title: "Balance",
+    url: "?modal=balance",
+    icon: IconCash,
     items: [],
   },
   {

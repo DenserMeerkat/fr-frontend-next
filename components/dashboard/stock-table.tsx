@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
+import Link from "next/link";
 
 const PERIOD_NUMBER = 200;
 
@@ -80,7 +81,14 @@ function StockRow({
 
   return (
     <TableRow className="font-medium">
-      <TableCell className="font-bold uppercase">{stock.symbol}</TableCell>
+      <TableCell className="font-bold uppercase">
+        <Link
+          href={`/dashboard/${symbol.toLowerCase()}`}
+          className="hover:underline"
+        >
+          {stock.symbol}
+        </Link>
+      </TableCell>
       <TableCell>{stock.periodNumber}</TableCell>
       <TableCell>{stock.openingPrice}</TableCell>
       <TableCell>{stock.closingPrice}</TableCell>

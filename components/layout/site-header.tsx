@@ -47,7 +47,7 @@ function useBreadcrumbItems() {
     const rootNavItem = navItems.find((item) => item.url === "/");
     breadcrumbItems.unshift({
       path: "/",
-      title: rootNavItem?.title || "Home",
+      title: rootNavItem?.title || "/",
       isLast: false,
     });
   }
@@ -69,9 +69,7 @@ export function SiteHeader() {
             orientation="vertical"
             className="mx-2 data-[orientation=vertical]:h-4"
           />
-          <h1 className="text-base font-medium">
-            {rootNavItem?.title || "Home"}
-          </h1>
+          <h1 className="text-base font-medium">{rootNavItem?.title || "/"}</h1>
           <div className="ml-auto flex items-center gap-2">
             <ModeToggle className="-mr-1" />
           </div>

@@ -70,6 +70,8 @@ export interface OrderFilters {
   statusCode?: number;
   page?: number;
   limit?: number;
+  sortBy?: string;
+  order?: "asc" | "desc";
 }
 
 export interface StockFilters {
@@ -84,3 +86,8 @@ export interface StockGroup {
   description: string;
   companies: StockSymbol[];
 }
+
+export type Cash = {
+  id: string;
+  balance: number;
+};
