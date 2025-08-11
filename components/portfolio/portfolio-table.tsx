@@ -32,6 +32,11 @@ import { usePortfolio } from "@/hooks/queries/use-portfolio";
 import { Portfolio } from "@/types";
 import TableHeaderComponent from "../common/data-table.tsx/table-header";
 import ColumnVisibilityToggle from "../common/data-table.tsx/column-visibility";
+import { PortfolioValueChart } from "./portfolio-value-chart";
+import { PortfolioVolumeChart } from "./portfolio-volume-chart";
+import { useLatestStockPrice } from "@/hooks/queries/use-stocks";
+import { useStateStore } from "@/hooks/use-state-store";
+import { cn } from "@/lib/utils";
 
 const SKELETON_ROWS = 10;
 const SKELETON_COLUMNS = 5;
@@ -71,6 +76,51 @@ const ActionsCell: React.FC<{ portfolio: Portfolio }> = ({ portfolio }) => (
     </DropdownMenuContent>
   </DropdownMenu>
 );
+
+interface CurrentValueCellProps {
+  stockTicker: string;
+  volume: number;
+  investedValue: number;
+}
+
+const CurrentValueCell: React.FC<CurrentValueCellProps> = ({
+  stockTicker,
+  volume,
+  investedValue,
+}) => {
+  const { refetchInterval } = useStateStore();
+  const { data, isLoading, isError } = useLatestStockPrice(
+    stockTicker.toLowerCase(),
+    true,
+    refetchInterval.value
+  );
+
+  if (isLoading) {
+    return <Skeleton className="h-6 w-24" />;
+  }
+
+  if (isError || !data || typeof data.price === "undefined") {
+    return <div className="text-sm text-destructive">Error</div>;
+  }
+
+  const currentTotalValue = data.price * volume;
+
+  const formatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(currentTotalValue);
+
+  return (
+    <div
+      className={cn(
+        "font-medium",
+        currentTotalValue > investedValue ? "text-positive" : "text-negative"
+      )}
+    >
+      {formatted}
+    </div>
+  );
+};
 
 export const columns: ColumnDef<Portfolio>[] = [
   {
@@ -119,7 +169,7 @@ export const columns: ColumnDef<Portfolio>[] = [
   {
     accessorKey: "value",
     header: ({ column }) => (
-      <SortableHeader column={column}>Total Value</SortableHeader>
+      <SortableHeader column={column}>Invested Value</SortableHeader>
     ),
     cell: ({ row }) => {
       const value = parseFloat(row.getValue("value"));
@@ -131,21 +181,17 @@ export const columns: ColumnDef<Portfolio>[] = [
     },
   },
   {
-    accessorKey: "pricePerShare",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Price per Share</SortableHeader>
-    ),
+    id: "currentValue",
+    header: "Current Value",
     cell: ({ row }) => {
-      const value = parseFloat(row.getValue("value"));
-      const volume = parseInt(row.getValue("volume"));
-      const pricePerShare = volume > 0 ? value / volume : 0;
-
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(pricePerShare);
-
-      return <div className="font-medium">{formatted}</div>;
+      const { stockTicker, volume, value } = row.original;
+      return (
+        <CurrentValueCell
+          stockTicker={stockTicker}
+          volume={volume}
+          investedValue={value}
+        />
+      );
     },
   },
   {
@@ -272,83 +318,61 @@ export function PortfolioDataTable() {
     );
   }
 
-  const totalValue = portfolio.reduce((sum, item) => sum + item.value, 0);
-  const totalShares = portfolio.reduce((sum, item) => sum + item.volume, 0);
-
   return (
-    <div className="w-full">
-      <div className="my-4 p-4 bg-muted/50 rounded-lg">
-        <div className="grid grid-cols-3 gap-4">
-          <div>
-            <p className="text-sm text-muted-foreground">Value</p>
-            <p className="sm:text-xl md:text-2xl font-bold">
-              {new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-              }).format(totalValue)}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Holdings</p>
-            <p className="sm:text-xl md:text-2xl font-bold">
-              {portfolio.length}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm text-muted-foreground">Shares</p>
-            <p className="sm:text-xl md:text-2xl font-bold">
-              {totalShares.toLocaleString()}
-            </p>
-          </div>
+    <div className="flex flex-col-reverse md:flex-col">
+      <div className="p-4 flex flex-col justify-around sm:flex-row gap-4">
+        <PortfolioValueChart portfolio={portfolio} />
+        <PortfolioVolumeChart portfolio={portfolio} />
+      </div>
+
+      <div>
+        <div className="flex items-center py-4 space-x-2">
+          <Input
+            placeholder="Filter by stock ticker..."
+            value={
+              (table.getColumn("stockTicker")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("stockTicker")?.setFilterValue(event.target.value)
+            }
+            className="max-w-72"
+          />
+          <ColumnVisibilityToggle table={table} />
         </div>
-      </div>
 
-      <div className="flex items-center py-4 space-x-2">
-        <Input
-          placeholder="Filter by stock ticker..."
-          value={
-            (table.getColumn("stockTicker")?.getFilterValue() as string) ?? ""
-          }
-          onChange={(event) =>
-            table.getColumn("stockTicker")?.setFilterValue(event.target.value)
-          }
-          className="max-w-72"
-        />
-        <ColumnVisibilityToggle table={table} />
-      </div>
-
-      <div className="mb-4 overflow-hidden rounded-md border">
-        <Table>
-          <HeaderComponent />
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+        <div className="mb-4 overflow-hidden rounded-md border">
+          <Table>
+            <HeaderComponent />
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No portfolio items found.
+                  </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No portfolio items found.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
     </div>
   );

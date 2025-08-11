@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TrendingUp, TrendingDown, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { ordersService } from "@/lib/api/services/orders.service";
 import { OrderType } from "@/types";
 import { cn } from "@/lib/utils";
@@ -101,18 +101,12 @@ export function StockTradingModal({
   };
 
   const total = volume ? parseFloat(volume) * currentPrice : 0;
-  const isPositive = orderType === OrderType.BUY;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-72 sm:max-w-72 p-0">
         <DialogHeader className="p-0">
           <DialogTitle className="p-4 border-b flex items-center gap-2">
-            {isPositive ? (
-              <TrendingUp className="h-5 w-5 text-positive" />
-            ) : (
-              <TrendingDown className="h-5 w-5 text-negative" />
-            )}
             {orderType.toUpperCase()} {symbol.toUpperCase()}
           </DialogTitle>
           <DialogDescription className="px-4 pt-2 text-sm flex flex-col items-center">
