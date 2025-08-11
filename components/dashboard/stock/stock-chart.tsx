@@ -29,9 +29,11 @@ export function StockChart({
   refetchInterval,
   isLoading,
 }: StockChartProps) {
-  const priceChange = recentPrices
-    ? recentPrices[0].price - recentPrices[recentPrices.length - 1].price
+  const oldPrice = recentPrices
+    ? recentPrices[recentPrices.length - 1].price
     : 0;
+  const newPrice = recentPrices ? recentPrices[0].price : 0;
+  const priceChange = recentPrices ? oldPrice - newPrice : 0;
   const isPositive = priceChange >= 0;
 
   const chartData =

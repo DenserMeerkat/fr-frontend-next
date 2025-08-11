@@ -18,9 +18,10 @@ export function StockMetrics({
   const oldPrice = recentPrices
     ? recentPrices[recentPrices.length - 1].price
     : 0;
-  const priceChange = recentPrices ? recentPrices[0].price - oldPrice : 0;
+  const newPrice = recentPrices ? recentPrices[0].price : 0;
+  const priceChange = recentPrices ? oldPrice - newPrice : 0;
   const priceChangePercent =
-    periodStats && priceChange ? (priceChange / oldPrice) * 100 : 0;
+    periodStats && priceChange ? (priceChange / newPrice) * 100 : 0;
 
   return (
     <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-4">

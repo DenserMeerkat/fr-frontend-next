@@ -1,8 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { StockPrice } from "@/types";
+import { OrderType, StockPrice } from "@/types";
 import { TrendingUp, TrendingDown } from "lucide-react";
+import { StockTradingModal } from "./stock-modal";
+import { useState } from "react";
 
 interface StockHeaderProps {
   symbol: string;
@@ -22,17 +24,23 @@ export function StockHeader({
   const oldPrice = recentPrices
     ? recentPrices[recentPrices.length - 1].price
     : 0;
-  const priceChange = recentPrices ? recentPrices[0].price - oldPrice : 0;
+  const newPrice = recentPrices ? recentPrices[0].price : 0;
+  const priceChange = recentPrices ? oldPrice - newPrice : 0;
   const priceChangePercent =
-    periodStats && priceChange ? (priceChange / oldPrice) * 100 : 0;
+    periodStats && priceChange ? (priceChange / newPrice) * 100 : 0;
   const isPositive = priceChange >= 0;
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [orderType, setOrderType] = useState<OrderType>(OrderType.BUY);
+
   const handleBuy = () => {
-    alert(`Buy order for ${symbol?.toUpperCase()} at $${latestPrice?.price}`);
+    setOrderType(OrderType.BUY);
+    setModalOpen(true);
   };
 
   const handleSell = () => {
-    alert(`Sell order for ${symbol?.toUpperCase()} at $${latestPrice?.price}`);
+    setOrderType(OrderType.SELL);
+    setModalOpen(true);
   };
 
   return (
@@ -88,6 +96,14 @@ export function StockHeader({
           </div>
         </div>
       </div>
+      <StockTradingModal
+        open={modalOpen}
+        onOpenChange={setModalOpen}
+        symbol={symbol}
+        companyName={latestPrice?.companyName || symbol}
+        currentPrice={latestPrice?.price || 0}
+        orderType={orderType}
+      />
     </div>
   );
 }
