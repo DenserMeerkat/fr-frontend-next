@@ -89,7 +89,7 @@ export default function TrendCard({
   const chartDomain = [minPrice - buffer, maxPrice + buffer];
 
   return (
-    <Card className="gap-0 overflow-clip p-0">
+    <Card className="from-primary/5 to-card bg-gradient-to-t shadow-xs gap-0 overflow-clip p-0">
       <CardHeader className="flex flex-row items-center justify-between px-4 py-2">
         <CardTitle className="text-muted-foreground truncate text-xs font-medium tracking-wide">
           <Link

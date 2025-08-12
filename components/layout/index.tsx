@@ -19,7 +19,6 @@ const SidebarLayout: React.FC<SidebarLayoutProps> = ({ children }) => {
       <SidebarProvider
         open={state.notifSidebarState}
         onOpenChange={state.setNotifSidebarState}
-        defaultOpen={false}
         style={
           {
             "--sidebar-width": "calc(var(--spacing) * 84)",

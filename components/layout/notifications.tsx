@@ -241,7 +241,9 @@ const Notifications = () => {
           <NotificationsHeader />
         </SidebarHeader>
         <SidebarContent>
-          <NotificationsContent />
+          <ScrollArea className="max-h-[calc(100dvh-8rem)] px-1 pr-2 bg-muted">
+            <NotificationsContent />
+          </ScrollArea>
         </SidebarContent>
         <SidebarFooter>
           <NotificationsFooter />

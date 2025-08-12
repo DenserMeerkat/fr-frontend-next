@@ -197,11 +197,11 @@ const PortfolioDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
   <div className="w-full">
     <div className="p-4 flex flex-wrap gap-4 w-full justify-center">
       <div className="flex flex-col sm:flex-row items-center gap-4">
-        <Skeleton className="h-54 w-54 rounded-full" />
+        <Skeleton className="h-48 w-48 rounded-full" />
         <Skeleton className="h-48 w-40" />
       </div>
       <div className="flex flex-col sm:flex-row items-center gap-4">
-        <Skeleton className="h-54 w-54 rounded-full" />
+        <Skeleton className="h-48 w-48 rounded-full" />
         <Skeleton className="h-52 w-40" />
       </div>
     </div>
@@ -291,7 +291,7 @@ export function PortfolioDataTable() {
 
   return (
     <div className="flex flex-col-reverse md:flex-col">
-      <div className="p-4 flex flex-wrap gap-4 w-full justify-center">
+      <div className="py-4 flex flex-wrap gap-4 w-full justify-center">
         <PortfolioValueChart portfolio={portfolio} />
         <PortfolioVolumeChart portfolio={portfolio} />
       </div>

@@ -23,8 +23,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { user } from "@/constants";
+import { useStateStore } from "@/hooks/use-state-store";
 
 export function NavUser() {
+  const { notifSidebarState, setNotifSidebarState } = useStateStore();
   const { isMobile } = useSidebar();
 
   return (
@@ -83,7 +85,9 @@ export function NavUser() {
                 <IconCreditCard />
                 Billing
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => setNotifSidebarState(!notifSidebarState)}
+              >
                 <IconNotification />
                 Notifications
               </DropdownMenuItem>

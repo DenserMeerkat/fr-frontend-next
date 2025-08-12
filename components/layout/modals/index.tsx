@@ -11,9 +11,7 @@ const Modals = () => {
   const VALID_MODALS = ["settings", "balance"];
 
   const removeModalParam = () => {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.delete("modal");
-    router.replace(`?${newSearchParams.toString()}`);
+    router.replace("?");
   };
 
   useEffect(() => {

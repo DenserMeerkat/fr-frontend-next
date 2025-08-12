@@ -76,7 +76,7 @@ export function PortfolioVolumeChart({ portfolio }: PortfolioVolumeChartProps) {
     <div className="flex flex-col sm:flex-row items-center">
       <ChartContainer
         config={chartConfig}
-        className="[&_.recharts-pie-label-text]:fill-foreground h-60 w-60 md:w-64 md:h-64"
+        className="[&_.recharts-pie-label-text]:fill-foreground h-60 w-60"
       >
         <PieChart>
           <ChartTooltip content={<ChartTooltipContent hideLabel />} />
@@ -100,7 +100,7 @@ export function PortfolioVolumeChart({ portfolio }: PortfolioVolumeChartProps) {
               </div>
             </div>
           ))}
-          <div className="flex items-center gap-2 mt-2 pt-2 border-t">
+          <div className="grid grid-cols-2 items-center gap-2 mt-2 pt-2 border-t w-36">
             <span className="font-bold">Total:</span>
             <span className="font-bold text-muted-foreground">
               {totalVolume}
