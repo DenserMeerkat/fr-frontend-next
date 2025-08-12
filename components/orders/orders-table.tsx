@@ -13,23 +13,11 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  ChevronDown,
-  Eye,
-  MoreHorizontal,
-  TrendingDown,
-  TrendingUp,
-} from "lucide-react";
-
-import { Button, buttonVariants } from "@/components/ui/button";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";

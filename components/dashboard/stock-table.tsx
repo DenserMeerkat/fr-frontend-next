@@ -64,11 +64,17 @@ function StockRow({
   if (isLoading) {
     return (
       <TableRow>
-        {Array.from({ length: tableHeads.length }).map((_, index) => (
+        {Array.from({ length: tableHeads.length - 1 }).map((_, index) => (
           <TableCell key={index}>
             <Skeleton className="w-12 h-5" />
           </TableCell>
         ))}
+        <TableCell className="flex gap-1">
+          <Skeleton className="h-6 w-6" />
+          <Skeleton className="h-6 w-6" />
+          <Skeleton className="h-6 w-6" />
+          <Skeleton className="h-6 w-6" />
+        </TableCell>
       </TableRow>
     );
   }

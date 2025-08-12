@@ -13,16 +13,12 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -32,7 +28,6 @@ import { usePortfolio } from "@/hooks/queries/use-portfolio";
 import { Portfolio } from "@/types";
 import TableHeaderComponent from "../common/data-table.tsx/table-header";
 import ColumnVisibilityToggle from "../common/data-table.tsx/column-visibility";
-import { PortfolioValueChart } from "./portfolio-value-chart";
 import { PortfolioVolumeChart } from "./portfolio-volume-chart";
 import { useLatestStockPrice } from "@/hooks/queries/use-stocks";
 import { useStateStore } from "@/hooks/use-state-store";
@@ -40,6 +35,7 @@ import { cn } from "@/lib/utils";
 import ActionsCell from "../common/data-table.tsx/actions";
 import { TimeAgoCell } from "../common/data-table.tsx/time-ago";
 import Link from "next/link";
+import { PortfolioValueChart } from "./portfolio-value-chart";
 
 const SKELETON_ROWS = 10;
 const SKELETON_COLUMNS = 5;
@@ -199,22 +195,14 @@ const PortfolioDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
   Header,
 }) => (
   <div className="w-full">
-    <div className="my-4 p-4 bg-muted/50 rounded-lg">
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <div>
-          <p className="text-sm text-muted-foreground">Value</p>
-          <Skeleton className="h-8 w-24" />
-        </div>
-        <div>
-          <p className="text-sm text-muted-foreground">Holdings</p>
-
-          <Skeleton className="h-8 w-24" />
-        </div>
-        <div>
-          <p className="text-sm text-muted-foreground">Shares</p>
-
-          <Skeleton className="h-8 w-24" />
-        </div>
+    <div className="p-4 flex flex-wrap gap-4 w-full justify-center">
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        <Skeleton className="h-54 w-54 rounded-full" />
+        <Skeleton className="h-48 w-40" />
+      </div>
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        <Skeleton className="h-54 w-54 rounded-full" />
+        <Skeleton className="h-52 w-40" />
       </div>
     </div>
     <div className="flex items-center py-4 space-x-2">
@@ -303,7 +291,7 @@ export function PortfolioDataTable() {
 
   return (
     <div className="flex flex-col-reverse md:flex-col">
-      <div className="p-4 flex flex-col justify-around sm:flex-row gap-4">
+      <div className="p-4 flex flex-wrap gap-4 w-full justify-center">
         <PortfolioValueChart portfolio={portfolio} />
         <PortfolioVolumeChart portfolio={portfolio} />
       </div>

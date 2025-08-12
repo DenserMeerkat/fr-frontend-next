@@ -3,8 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { TrendingUp, TrendingDown, Eye, MoreHorizontal } from "lucide-react";
-
-// Assuming these are from your Shadcn UI library
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
