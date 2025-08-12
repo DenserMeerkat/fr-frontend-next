@@ -24,6 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Skeleton } from "../ui/skeleton";
 import Link from "next/link";
+import ActionsCell from "../common/data-table.tsx/actions";
 
 const PERIOD_NUMBER = 200;
 
@@ -36,6 +37,7 @@ const tableHeads: string[] = [
   "Min Price",
   "Start Time",
   "End Time",
+  "",
 ];
 
 function StockRow({
@@ -83,7 +85,7 @@ function StockRow({
     <TableRow className="font-medium">
       <TableCell className="font-bold uppercase">
         <Link
-          href={`/dashboard/${symbol.toLowerCase()}`}
+          href={`/stock/${symbol.toLowerCase()}`}
           className="hover:underline"
         >
           {stock.symbol}
@@ -106,6 +108,9 @@ function StockRow({
       </TableCell>
       <TableCell>{stock.periodStartTime}</TableCell>
       <TableCell>{stock.periodEndTime}</TableCell>
+      <TableCell className="w-36">
+        <ActionsCell stockSymbol={stock.symbol} />
+      </TableCell>
     </TableRow>
   );
 }
@@ -230,7 +235,7 @@ export function AveragesFooter({ tableData }: { tableData: StockPeriod[] }) {
         <TableCell>{averages.closingPrice}</TableCell>
         <TableCell>{averages.maxPrice}</TableCell>
         <TableCell>{averages.minPrice}</TableCell>
-        <TableCell colSpan={2}></TableCell>
+        <TableCell colSpan={3}></TableCell>
       </TableRow>
     </TableFooter>
   );

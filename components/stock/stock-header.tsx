@@ -1,10 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { OrderType, StockPrice } from "@/types";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { StockTradingModal } from "./stock-modal";
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface StockHeaderProps {
   symbol: string;
@@ -30,17 +32,15 @@ export function StockHeader({
     periodStats && priceChange ? (priceChange / newPrice) * 100 : 0;
   const isPositive = priceChange >= 0;
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [orderType, setOrderType] = useState<OrderType>(OrderType.BUY);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const action = searchParams.get("action");
 
-  const handleBuy = () => {
-    setOrderType(OrderType.BUY);
-    setModalOpen(true);
-  };
+  const isModalOpen = action === "buy" || action === "sell";
+  const orderType = action === "buy" ? OrderType.BUY : OrderType.SELL;
 
-  const handleSell = () => {
-    setOrderType(OrderType.SELL);
-    setModalOpen(true);
+  const closeModal = () => {
+    router.push("?");
   };
 
   return (
@@ -79,26 +79,30 @@ export function StockHeader({
           </div>
 
           <div className="flex gap-3 w-full lg:w-fit justify-start lg:justify-end">
-            <Button
-              onClick={handleBuy}
-              className="bg-positive hover:bg-positive/60 px-6 sm:px-10 tracking-wider font-semibold w-1/2 lg:w-auto"
-              disabled={isLoading}
+            <Link
+              href={"?action=buy"}
+              className={cn(
+                buttonVariants(),
+                "bg-positive hover:bg-positive/60 px-6 sm:px-10 tracking-wider font-semibold w-1/2 lg:w-auto"
+              )}
             >
               BUY
-            </Button>
-            <Button
-              onClick={handleSell}
-              className="bg-negative hover:bg-negative/60 px-6 sm:px-10 tracking-wider font-semibold w-1/2 lg:w-auto"
-              disabled={isLoading}
+            </Link>
+            <Link
+              href={"?action=sell"}
+              className={cn(
+                buttonVariants(),
+                "bg-negative hover:bg-negative/60 px-6 sm:px-10 tracking-wider font-semibold w-1/2 lg:w-auto"
+              )}
             >
               SELL
-            </Button>
+            </Link>
           </div>
         </div>
       </div>
       <StockTradingModal
-        open={modalOpen}
-        onOpenChange={setModalOpen}
+        open={isModalOpen}
+        closeModal={closeModal}
         symbol={symbol}
         companyName={latestPrice?.companyName || symbol}
         currentPrice={latestPrice?.price || 0}

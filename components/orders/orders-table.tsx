@@ -13,9 +13,16 @@ import {
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import {
+  ArrowUpDown,
+  ChevronDown,
+  Eye,
+  MoreHorizontal,
+  TrendingDown,
+  TrendingUp,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
@@ -40,6 +47,11 @@ import { useOrders } from "@/hooks/queries/use-orders";
 import { Order, OrderType } from "@/types";
 import TableHeaderComponent from "../common/data-table.tsx/table-header";
 import ColumnVisibilityToggle from "../common/data-table.tsx/column-visibility";
+import { TimeAgoCell } from "../common/data-table.tsx/time-ago";
+import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { cn } from "@/lib/utils";
+import ActionsCell from "../common/data-table.tsx/actions";
 
 const ALL_FILTER = "all";
 const SKELETON_ROWS = 10;
@@ -52,7 +64,7 @@ const getStatusText = (statusCode: number): string => {
     2: "success",
     3: "failed",
   };
-  return statusMap[statusCode] ?? "unknown";
+  return statusMap[statusCode] ?? "pending";
 };
 
 const getStatusColor = (statusCode: number): string => {
@@ -89,29 +101,6 @@ const SortableHeader: React.FC<{ column: any; children: React.ReactNode }> = ({
   </Button>
 );
 
-const ActionsCell: React.FC<{ order: Order }> = ({ order }) => (
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="ghost" className="h-8 w-8 p-0">
-        <span className="sr-only">Open menu</span>
-        <MoreHorizontal />
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent align="end">
-      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-      <DropdownMenuItem
-        onClick={() => navigator.clipboard.writeText(order.id.toString())}
-      >
-        Copy order ID
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem>View order details</DropdownMenuItem>
-      <DropdownMenuItem>Cancel order</DropdownMenuItem>
-      <DropdownMenuItem>Modify order</DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
-);
-
 export const columns: ColumnDef<Order>[] = [
   {
     id: "select",
@@ -145,11 +134,19 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: "stockTicker",
     header: ({ column }) => (
-      <SortableHeader column={column}>Stock Ticker</SortableHeader>
+      <SortableHeader column={column}>Stock</SortableHeader>
     ),
-    cell: ({ row }) => (
-      <div className="font-mono uppercase">{row.getValue("stockTicker")}</div>
-    ),
+    cell: ({ row }) => {
+      const symbol = row.getValue("stockTicker") as string;
+      return (
+        <Link
+          href={`/stock/${symbol.toLowerCase()}`}
+          className="hover:underline uppercase font-medium"
+        >
+          {symbol}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "buyOrSell",
@@ -212,21 +209,17 @@ export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: "createdAt",
     header: ({ column }) => (
-      <SortableHeader column={column}>Created At</SortableHeader>
+      <SortableHeader column={column}>Order Placed</SortableHeader>
     ),
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createdAt"));
-      return (
-        <div className="text-sm">
-          {date.toLocaleDateString()} {date.toLocaleTimeString()}
-        </div>
-      );
+      const createdAt = row.getValue("createdAt") as string;
+      return <TimeAgoCell date={createdAt} />;
     },
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsCell order={row.original} />,
+    cell: ({ row }) => <ActionsCell stockSymbol={row.original.stockTicker} />,
   },
 ];
 
@@ -259,7 +252,10 @@ const OrdersDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
                   <Skeleton className="h-6 w-12" />
                 </TableCell>
               ))}
-              <TableCell>
+              <TableCell className="flex gap-1">
+                <Skeleton className="h-6 w-6" />
+                <Skeleton className="h-6 w-6" />
+                <Skeleton className="h-6 w-6" />
                 <Skeleton className="h-6 w-6" />
               </TableCell>
             </TableRow>
@@ -286,7 +282,7 @@ const StatusFilter: React.FC<{ table: any }> = ({ table }) => (
         <SelectItem value={ALL_FILTER} className="capitalize">
           {ALL_FILTER}
         </SelectItem>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 4 }).map((_, index) => (
           <SelectItem key={index} value={`${index}`} className="capitalize">
             {getStatusText(index)}
           </SelectItem>
@@ -301,7 +297,11 @@ interface OrdersDataTableProps {
 }
 
 export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
-  const { data: orders = [], isLoading, error } = useOrders(filters);
+  const {
+    data: orders = [],
+    isLoading,
+    error,
+  } = useOrders({ filters: filters, refetchInterval: 1000 });
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -311,8 +311,10 @@ export function OrdersDataTable({ filters = {} }: OrdersDataTableProps) {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const memoizedData = React.useMemo(() => orders, [orders]);
+
   const table = useReactTable({
-    data: orders,
+    data: memoizedData,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

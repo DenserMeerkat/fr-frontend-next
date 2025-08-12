@@ -2,10 +2,10 @@
 
 import { useParams } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
-import { StockHeader } from "@/components/dashboard/stock/stock-header";
-import { StockMetrics } from "@/components/dashboard/stock/stock-metrics";
-import { StockChart } from "@/components/dashboard/stock/stock-chart";
-import { StockStats } from "@/components/dashboard/stock/stock-stats";
+import { StockHeader } from "@/components/stock/stock-header";
+import { StockMetrics } from "@/components/stock/stock-metrics";
+import { StockChart } from "@/components/stock/stock-chart";
+import { StockStats } from "@/components/stock/stock-stats";
 import {
   useLatestStockPrice,
   useRecentStockPrices,

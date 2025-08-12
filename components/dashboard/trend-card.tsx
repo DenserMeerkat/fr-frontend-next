@@ -46,7 +46,7 @@ export default function TrendCard({
             Error
           </CardTitle>
           <Link
-            href={`/dashboard/${symbol.toLowerCase()}`}
+            href={`/stock/${symbol.toLowerCase()}`}
             className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs font-medium tracking-widest uppercase"
           >
             {symbol}
@@ -93,14 +93,14 @@ export default function TrendCard({
       <CardHeader className="flex flex-row items-center justify-between px-4 py-2">
         <CardTitle className="text-muted-foreground truncate text-xs font-medium tracking-wide">
           <Link
-            href={`/dashboard/${symbol.toLowerCase()}`}
+            href={`/stock/${symbol.toLowerCase()}`}
             className="hover:underline"
           >
             {data[0]?.companyName || symbol}
           </Link>
         </CardTitle>
         <Link
-          href={`/dashboard/${symbol.toLowerCase()}`}
+          href={`/stock/${symbol.toLowerCase()}`}
           className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs font-medium tracking-widest uppercase"
         >
           {symbol}

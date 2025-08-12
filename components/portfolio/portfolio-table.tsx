@@ -37,6 +37,9 @@ import { PortfolioVolumeChart } from "./portfolio-volume-chart";
 import { useLatestStockPrice } from "@/hooks/queries/use-stocks";
 import { useStateStore } from "@/hooks/use-state-store";
 import { cn } from "@/lib/utils";
+import ActionsCell from "../common/data-table.tsx/actions";
+import { TimeAgoCell } from "../common/data-table.tsx/time-ago";
+import Link from "next/link";
 
 const SKELETON_ROWS = 10;
 const SKELETON_COLUMNS = 5;
@@ -52,29 +55,6 @@ const SortableHeader: React.FC<{ column: any; children: React.ReactNode }> = ({
     {children}
     <ArrowUpDown />
   </Button>
-);
-
-const ActionsCell: React.FC<{ portfolio: Portfolio }> = ({ portfolio }) => (
-  <DropdownMenu>
-    <DropdownMenuTrigger asChild>
-      <Button variant="ghost" className="h-8 w-8 p-0">
-        <span className="sr-only">Open menu</span>
-        <MoreHorizontal />
-      </Button>
-    </DropdownMenuTrigger>
-    <DropdownMenuContent align="end">
-      <DropdownMenuLabel>Actions</DropdownMenuLabel>
-      <DropdownMenuItem
-        onClick={() => navigator.clipboard.writeText(portfolio.stockTicker)}
-      >
-        Copy stock ticker
-      </DropdownMenuItem>
-      <DropdownMenuSeparator />
-      <DropdownMenuItem>View stock details</DropdownMenuItem>
-      <DropdownMenuItem>Buy more shares</DropdownMenuItem>
-      <DropdownMenuItem>Sell shares</DropdownMenuItem>
-    </DropdownMenuContent>
-  </DropdownMenu>
 );
 
 interface CurrentValueCellProps {
@@ -148,13 +128,19 @@ export const columns: ColumnDef<Portfolio>[] = [
   {
     accessorKey: "stockTicker",
     header: ({ column }) => (
-      <SortableHeader column={column}>Stock Ticker</SortableHeader>
+      <SortableHeader column={column}>Stock</SortableHeader>
     ),
-    cell: ({ row }) => (
-      <div className="font-mono uppercase font-medium">
-        {row.getValue("stockTicker")}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const symbol = row.getValue("stockTicker") as string;
+      return (
+        <Link
+          href={`/stock/${symbol.toLowerCase()}`}
+          className="hover:underline uppercase font-medium"
+        >
+          {symbol}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "volume",
@@ -168,9 +154,7 @@ export const columns: ColumnDef<Portfolio>[] = [
   },
   {
     accessorKey: "value",
-    header: ({ column }) => (
-      <SortableHeader column={column}>Invested Value</SortableHeader>
-    ),
+    header: "Net Investement",
     cell: ({ row }) => {
       const value = parseFloat(row.getValue("value"));
       const formatted = new Intl.NumberFormat("en-US", {
@@ -200,18 +184,14 @@ export const columns: ColumnDef<Portfolio>[] = [
       <SortableHeader column={column}>Last Trade</SortableHeader>
     ),
     cell: ({ row }) => {
-      const date = new Date(row.getValue("tradeTime"));
-      return (
-        <div className="text-sm">
-          {date.toLocaleDateString()} {date.toLocaleTimeString()}
-        </div>
-      );
+      const createdAt = row.getValue("tradeTime") as string;
+      return <TimeAgoCell date={createdAt} />;
     },
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => <ActionsCell portfolio={row.original} />,
+    cell: ({ row }) => <ActionsCell stockSymbol={row.original.stockTicker} />,
   },
 ];
 
@@ -261,7 +241,10 @@ const PortfolioDataTableSkeleton: React.FC<{ Header: React.ComponentType }> = ({
                   <Skeleton className="h-6 w-12" />
                 </TableCell>
               ))}
-              <TableCell>
+              <TableCell className="flex gap-1">
+                <Skeleton className="h-6 w-6" />
+                <Skeleton className="h-6 w-6" />
+                <Skeleton className="h-6 w-6" />
                 <Skeleton className="h-6 w-6" />
               </TableCell>
             </TableRow>

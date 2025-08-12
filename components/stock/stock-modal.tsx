@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils";
 
 interface StockTradingModalProps {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  closeModal: () => void;
   symbol: string;
   companyName: string;
   currentPrice: number;
@@ -31,7 +31,7 @@ interface StockTradingModalProps {
 
 export function StockTradingModal({
   open,
-  onOpenChange,
+  closeModal,
   symbol,
   companyName,
   currentPrice,
@@ -80,7 +80,7 @@ export function StockTradingModal({
 
   const handleClose = () => {
     setVolume("");
-    onOpenChange(false);
+    closeModal();
   };
 
   const handleVolumeChange = (e: any) => {
@@ -103,7 +103,14 @@ export function StockTradingModal({
   const total = volume ? parseFloat(volume) * currentPrice : 0;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        if (!open) {
+          closeModal();
+        }
+      }}
+    >
       <DialogContent className="max-w-72 sm:max-w-72 p-0">
         <DialogHeader className="p-0">
           <DialogTitle className="p-4 border-b flex items-center gap-2">
