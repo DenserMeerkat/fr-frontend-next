@@ -1,3 +1,4 @@
+import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ModeToggle } from "@/components/common/mode-toggle";
@@ -18,7 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { navItems } from "@/constants";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { useStateStore } from "@/hooks/use-state-store";
 import { PanelRight } from "lucide-react";
 
@@ -91,7 +92,7 @@ export function SiteHeader() {
 
     if (breadcrumbItems.length <= 3) {
       return breadcrumbItems.map((item) => (
-        <div key={item.path} className="flex items-center">
+        <React.Fragment key={item.path}>
           <BreadcrumbItem>
             {item.isLast ? (
               <BreadcrumbPage className="text-base font-medium">
@@ -107,7 +108,7 @@ export function SiteHeader() {
             )}
           </BreadcrumbItem>
           {!item.isLast && <BreadcrumbSeparator />}
-        </div>
+        </React.Fragment>
       ));
     }
 
@@ -130,7 +131,7 @@ export function SiteHeader() {
         <BreadcrumbSeparator />
 
         {hiddenItems.length > 0 && (
-          <>
+          <React.Fragment key="ellipsis-items">
             <BreadcrumbItem>
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex h-9 w-9 items-center justify-center">
@@ -149,11 +150,11 @@ export function SiteHeader() {
               </DropdownMenu>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-          </>
+          </React.Fragment>
         )}
 
         {lastTwoItems.map((item) => (
-          <div key={item.path} className="flex items-center">
+          <React.Fragment key={item.path}>
             <BreadcrumbItem>
               {item.isLast ? (
                 <BreadcrumbPage className="text-base font-medium">
@@ -169,7 +170,7 @@ export function SiteHeader() {
               )}
             </BreadcrumbItem>
             {!item.isLast && <BreadcrumbSeparator />}
-          </div>
+          </React.Fragment>
         ))}
       </>
     );

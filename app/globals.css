@@ -180,6 +180,11 @@
   --negative-color: hsl(346 87% 43%);
 }
 
+.dark {
+  --positive-color: hsl(142, 75%, 48%);
+  --negative-color: hsl(0, 96%, 66%);
+}
+
 body {
   letter-spacing: var(--tracking-normal);
   font-family: var(--font-mono);

@@ -154,7 +154,7 @@ export function StockTable() {
           value={selectedGroup.groupName}
           onValueChange={handleGroupChange}
         >
-          <SelectTrigger>
+          <SelectTrigger aria-label="Select a group">
             <SelectValue placeholder="Select a group" />
           </SelectTrigger>
           <SelectContent align="end">

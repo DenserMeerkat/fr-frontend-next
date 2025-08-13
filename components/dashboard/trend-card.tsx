@@ -92,19 +92,11 @@ export default function TrendCard({
     <Card className="from-primary/5 to-card bg-gradient-to-t shadow-xs gap-0 overflow-clip p-0">
       <CardHeader className="flex flex-row items-center justify-between px-4 py-2">
         <CardTitle className="text-muted-foreground truncate text-xs font-medium tracking-wide">
-          <Link
-            href={`/stock/${symbol.toLowerCase()}`}
-            className="hover:underline"
-          >
-            {data[0]?.companyName || symbol}
-          </Link>
+          {data[0]?.companyName || symbol}
         </CardTitle>
-        <Link
-          href={`/stock/${symbol.toLowerCase()}`}
-          className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs font-medium tracking-widest uppercase"
-        >
+        <span className="min-w-12 rounded-full border px-2 py-0.5 text-center text-xs font-medium tracking-widest uppercase">
           {symbol}
-        </Link>
+        </span>
       </CardHeader>
 
       <CardContent className="p-0">

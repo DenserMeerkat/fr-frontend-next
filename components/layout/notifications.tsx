@@ -198,27 +198,28 @@ const NotificationList = () => {
   return (
     <>
       {mockNotifications.map((notification) => (
-        <Card
-          key={notification.id}
-          className={cn(
-            "transition-colors cursor-pointer items-start gap-2 rounded-lg border border-border/60 py-3 min-w-0 my-1",
-            notification.read && "bg-muted"
-          )}
-        >
-          <CardHeader className="w-full px-3">
-            <CardTitle className="flex gap-2 tracking-wide">
-              {getNotificationIcon(notification.type)}
-              {notification.title}
-            </CardTitle>
-            <CardDescription hidden>notification</CardDescription>
-          </CardHeader>
-          <CardContent className="px-3">
-            <p className="text-xs">{notification.message}</p>
-          </CardContent>
-          <CardFooter className="w-full">
-            <p className="text-[0.65rem] ml-auto">{notification.timestamp}</p>
-          </CardFooter>
-        </Card>
+        <SidebarMenuItem key={notification.id} className="list-none">
+          <Card
+            className={cn(
+              "transition-colors cursor-pointer items-start gap-2 rounded-lg border border-border/60 py-3 min-w-0 my-1",
+              notification.read && "bg-muted"
+            )}
+          >
+            <CardHeader className="w-full px-3">
+              <CardTitle className="flex gap-2 tracking-wide">
+                {getNotificationIcon(notification.type)}
+                {notification.title}
+              </CardTitle>
+              <CardDescription hidden>notification</CardDescription>
+            </CardHeader>
+            <CardContent className="px-3">
+              <p className="text-xs">{notification.message}</p>
+            </CardContent>
+            <CardFooter className="w-full">
+              <p className="text-[0.65rem] ml-auto">{notification.timestamp}</p>
+            </CardFooter>
+          </Card>
+        </SidebarMenuItem>
       ))}
     </>
   );
@@ -241,7 +242,7 @@ const Notifications = () => {
           <NotificationsHeader />
         </SidebarHeader>
         <SidebarContent>
-          <ScrollArea className="max-h-[calc(100dvh-8rem)] px-1 pr-2 bg-muted">
+          <ScrollArea className="max-h-[calc(100dvh-8rem)] px-1 pr-2">
             <NotificationsContent />
           </ScrollArea>
         </SidebarContent>
